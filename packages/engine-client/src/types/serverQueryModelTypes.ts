@@ -6,7 +6,6 @@ export interface EngineServerHealthBreakdown {
 
 export interface EngineServerSpotBalanceData {
   amount: string;
-  last_cumulative_multiplier_x18: string;
 }
 
 export interface EngineServerPerpBalanceData {

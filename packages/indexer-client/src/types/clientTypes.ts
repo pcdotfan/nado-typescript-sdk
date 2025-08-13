@@ -1,7 +1,7 @@
 import {
   EIP712OrderValues,
   Market,
-  OrderExpirationType,
+  OrderAppendix,
   PerpBalance,
   PerpMarket,
   ProductEngineType,
@@ -14,11 +14,11 @@ import { Hex } from 'viem';
 import { CandlestickPeriod } from './CandlestickPeriod';
 import { IndexerEventType } from './IndexerEventType';
 import { IndexerLeaderboardRankType } from './IndexerLeaderboardType';
+import { NadoTx, NadoWithdrawCollateralTx } from './NadoTx';
 import {
   IndexerServerFastWithdrawalSignatureParams,
   IndexerServerListSubaccountsParams,
 } from './serverTypes';
-import { NadoTx, NadoWithdrawCollateralTx } from './NadoTx';
 
 /**
  * Base types
@@ -354,11 +354,9 @@ export interface IndexerOrder {
   submissionIndex: string;
   amount: BigDecimal;
   price: BigDecimal;
-  // This includes the order type
-  rawExpiration: BigDecimal;
-  isReduceOnly: boolean;
-  orderType: OrderExpirationType;
   expiration: number;
+  // Order metadata from appendix
+  appendix: OrderAppendix;
   nonce: BigDecimal;
   // Derived from the nonce
   recvTimeSeconds: number;

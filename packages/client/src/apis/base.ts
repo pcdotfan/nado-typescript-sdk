@@ -33,10 +33,6 @@ export class BaseNadoAPI {
     return this.context.contractAddresses.endpoint;
   }
 
-  protected async getOrderbookAddress(productId: number) {
-    return this.context.engineClient.getOrderbookAddress(productId);
-  }
-
   protected getSubaccountOwnerIfNeeded(params: {
     subaccountOwner?: string;
   }): string {

@@ -1,49 +1,24 @@
 import {
   EIP712CancelOrdersParams,
   EIP712CancelProductOrdersParams,
+  OrderAppendix,
   Subaccount,
 } from '@nadohq/contracts';
+import { EngineOrderParams } from '@nadohq/engine-client';
+import { BigDecimal } from '@nadohq/utils';
+import { TriggerCriteria, TriggerOrderStatus } from './clientModelTypes';
 import {
-  EngineOrderParams,
-  EngineServerExecuteResult,
-} from '@nadohq/engine-client';
-import { BigDecimal, BigDecimalish } from '@nadohq/utils';
-import { TriggerServerOrder } from './serverQueryTypes';
+  TriggerServerOrder,
+  TriggerServerTriggerTypeFilter,
+} from './serverQueryTypes';
 
 type WithOptionalNonce<T> = Omit<T, 'nonce'> & { nonce?: string };
 
-export type TriggerCriteriaType =
-  | 'oracle_price_above'
-  | 'oracle_price_below'
-  | 'last_price_above'
-  | 'last_price_below'
-  | 'mid_price_above'
-  | 'mid_price_below';
-
-export type TriggerCriteria = {
-  type: TriggerCriteriaType;
-  triggerPrice: BigDecimalish;
-};
-
-export type TriggerOrderStatus =
-  | {
-      type: 'pending';
-    }
-  | {
-      type: 'cancelled';
-      reason: string;
-    }
-  | {
-      type: 'triggered';
-      result: EngineServerExecuteResult;
-    }
-  | {
-      type: 'internal_error';
-      error: string;
-    };
-
 interface SignatureParams {
-  // Orderbook address for placement, endpoint address for cancellation & listing
+  /**
+   * Address derived from productId for placement (see getOrderVerifyingAddr)
+   * endpoint address for cancellation & listing
+   */
   verifyingAddr: string;
   chainId: number;
 }
@@ -59,6 +34,8 @@ export interface TriggerPlaceOrderParams extends SignatureParams {
   triggerCriteria: TriggerCriteria;
   // If not given, engine defaults to true (leverage/borrow enabled)
   spotLeverage?: boolean;
+  // For isolated orders, this specifies whether margin can be borrowed (i.e. whether the cross account can have a negative USDC balance)
+  borrowMargin?: boolean;
   digest?: string;
   nonce?: string;
 }
@@ -85,6 +62,10 @@ export interface TriggerListOrdersParams extends Subaccount, SignatureParams {
   // When provided, the associated trigger orders are returned regardless of other filters
   digests?: string[];
   limit?: number;
+  // Filter by trigger types
+  triggerTypes?: TriggerServerTriggerTypeFilter[];
+  // Filter by reduce-only orders
+  reduceOnly?: boolean;
 }
 
 export interface TriggerOrder {
@@ -92,9 +73,10 @@ export interface TriggerOrder {
   triggerCriteria: TriggerCriteria;
   price: BigDecimal;
   amount: BigDecimal;
-  expiration: BigDecimal;
+  expiration: number;
   nonce: string;
   digest: string;
+  appendix: OrderAppendix;
 }
 
 export interface TriggerOrderInfo {

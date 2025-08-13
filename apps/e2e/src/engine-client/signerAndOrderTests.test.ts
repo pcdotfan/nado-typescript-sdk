@@ -1,17 +1,14 @@
 import {
   createDeterministicLinkedSignerPrivateKey,
-  getIsolatedOrderDigest,
   getOrderDigest,
   getOrderNonce,
+  getOrderVerifyingAddress,
   NADO_ABIS,
+  packOrderAppendix,
   QUOTE_PRODUCT_ID,
   subaccountToHex,
 } from '@nadohq/contracts';
-import {
-  EngineClient,
-  EngineIsolatedOrderParams,
-  EngineOrderParams,
-} from '@nadohq/engine-client';
+import { EngineClient, EngineOrderParams } from '@nadohq/engine-client';
 import { addDecimals } from '@nadohq/utils';
 import test from 'node:test';
 import { createWalletClient, getContract, http, zeroAddress } from 'viem';
@@ -44,7 +41,7 @@ async function signerAndOrderTests(context: RunContext) {
 
   console.log('Placing order');
   const spotProductId = 1;
-  const spotOrderbookAddr = await client.getOrderbookAddress(spotProductId);
+  const spotOrderVerifyingAddr = getOrderVerifyingAddress(spotProductId);
   const spotOraclePrice = products.find(
     (market) => market.productId === spotProductId,
   )!.product.oraclePrice;
@@ -56,9 +53,12 @@ async function signerAndOrderTests(context: RunContext) {
     amount: addDecimals(-0.03),
     expiration: getExpiration(),
     price: shortLimitPrice,
+    appendix: packOrderAppendix({
+      orderExecutionType: 'default',
+    }),
   };
   const spotPlaceOrderResult = await client.placeOrder({
-    verifyingAddr: spotOrderbookAddr,
+    verifyingAddr: spotOrderVerifyingAddr,
     chainId,
     productId: spotProductId,
     order: spotOrder,
@@ -66,7 +66,7 @@ async function signerAndOrderTests(context: RunContext) {
   });
   const spotOrderDigest = getOrderDigest({
     order: spotPlaceOrderResult.orderParams,
-    verifyingAddr: spotOrderbookAddr,
+    productId: spotProductId,
     chainId,
   });
   debugPrint('Done placing spot order', spotPlaceOrderResult);
@@ -79,27 +79,32 @@ async function signerAndOrderTests(context: RunContext) {
 
   console.log('Placing isolated order');
   const perpProductId = 2;
-  const perpOrderbookAddr = await client.getOrderbookAddress(perpProductId);
-  const isolatedOrder: EngineIsolatedOrderParams = {
+  const perpOrderVerifyingAddr = getOrderVerifyingAddress(perpProductId);
+  const isolatedOrder: EngineOrderParams = {
     subaccountOwner: walletClientAddress,
     subaccountName: 'default',
     amount: addDecimals(-0.03),
     expiration: getExpiration(),
     price: shortLimitPrice,
-    // 10x leverage
-    margin: addDecimals(shortLimitPrice.multipliedBy(0.03).div(10)),
+    appendix: packOrderAppendix({
+      orderExecutionType: 'default',
+      isolated: {
+        // 10x leverage
+        margin: addDecimals(shortLimitPrice.multipliedBy(0.03).div(10)),
+      },
+    }),
   };
-  const perpPlaceIsolatedOrderResult = await client.placeIsolatedOrder({
-    verifyingAddr: perpOrderbookAddr,
+  const perpPlaceIsolatedOrderResult = await client.placeOrder({
+    verifyingAddr: perpOrderVerifyingAddr,
     chainId,
     productId: perpProductId,
     order: isolatedOrder,
     nonce: getOrderNonce(),
   });
   debugPrint('Done placing isolated order', perpPlaceIsolatedOrderResult);
-  const perpIsolatedOrderDigest = getIsolatedOrderDigest({
+  const perpIsolatedOrderDigest = getOrderDigest({
     order: perpPlaceIsolatedOrderResult.orderParams,
-    verifyingAddr: perpOrderbookAddr,
+    productId: perpProductId,
     chainId,
   });
 
@@ -264,18 +269,23 @@ async function signerAndOrderTests(context: RunContext) {
   client.setLinkedSigner(linkedSignerWalletClient);
 
   // Open an iso position
-  const createIsoPositionOrder: EngineIsolatedOrderParams = {
+  const createIsoPositionOrder: EngineOrderParams = {
     subaccountOwner: walletClientAddress,
     subaccountName: 'default',
     amount: addDecimals(0.03),
-    expiration: getExpiration('fok'),
+    expiration: getExpiration(),
     // Use the short limit price here to ensure a fill when opening a long
     price: shortLimitPrice,
-    // 10x leverage
-    margin: addDecimals(shortLimitPrice.multipliedBy(0.03).div(10)),
+    appendix: packOrderAppendix({
+      orderExecutionType: 'ioc',
+      isolated: {
+        // 10x leverage
+        margin: addDecimals(shortLimitPrice.multipliedBy(0.03).div(10)),
+      },
+    }),
   };
-  const createIsoPositionOrderResult = await client.placeIsolatedOrder({
-    verifyingAddr: perpOrderbookAddr,
+  const createIsoPositionOrderResult = await client.placeOrder({
+    verifyingAddr: perpOrderVerifyingAddr,
     chainId,
     productId: perpProductId,
     order: createIsoPositionOrder,
@@ -309,16 +319,19 @@ async function signerAndOrderTests(context: RunContext) {
   // places order for multiple products
   for (const productId of [spotProductId, perpProductId]) {
     console.log('Placing order for product', productId);
-    const orderbookAddr = await client.getOrderbookAddress(productId);
+    const verifyingAddr = getOrderVerifyingAddress(productId);
     const order: EngineOrderParams = {
       subaccountOwner: walletClientAddress,
       subaccountName: 'default',
       amount: addDecimals(-0.01),
       expiration: getExpiration(),
       price: shortLimitPrice,
+      appendix: packOrderAppendix({
+        orderExecutionType: 'default',
+      }),
     };
     const placeResult = await client.placeOrder({
-      verifyingAddr: orderbookAddr,
+      verifyingAddr,
       productId,
       order,
       nonce: getOrderNonce(),

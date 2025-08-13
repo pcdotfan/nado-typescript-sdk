@@ -2,6 +2,8 @@ import { createNadoClient, NadoClient, PlaceOrderParams } from '@nadohq/client';
 import {
   getOrderDigest,
   getOrderNonce,
+  getOrderVerifyingAddress,
+  packOrderAppendix,
   QUOTE_PRODUCT_ID,
   subaccountToHex,
 } from '@nadohq/contracts';
@@ -27,11 +29,10 @@ async function wsMessageTests(context: RunContext) {
     expiration: nowInSeconds() + 60,
     price: 28000,
     amount: addDecimals(0.01),
+    appendix: packOrderAppendix({
+      orderExecutionType: 'default',
+    }),
   };
-
-  const contracts = await nadoClient.context.engineClient.getContracts();
-  // Address for product ID of 1
-  const verifyingAddr = contracts.orderbookAddrs[1];
 
   const wsOrder = {
     ...orderParams,
@@ -40,7 +41,7 @@ async function wsMessageTests(context: RunContext) {
   };
   const wsOrderSig = await nadoClient.context.engineClient.sign(
     'place_order',
-    verifyingAddr,
+    getOrderVerifyingAddress(1),
     chainId,
     wsOrder,
   );
@@ -55,7 +56,7 @@ async function wsMessageTests(context: RunContext) {
 
   const wsOrderDigest = getOrderDigest({
     order: wsOrder,
-    verifyingAddr,
+    productId: 1,
     chainId,
   });
 
