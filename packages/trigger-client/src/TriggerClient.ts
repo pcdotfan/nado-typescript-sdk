@@ -7,7 +7,6 @@ import {
   getNadoEIP712Values,
   getOrderNonce,
   getSignedTransactionRequest,
-  getTriggerOrderNonce,
   SignableRequestType,
   SignableRequestTypeToParams,
   WalletClientWithAccount,
@@ -77,7 +76,8 @@ export class TriggerClient {
       price: params.order.price,
       subaccountName: params.order.subaccountName,
       subaccountOwner: params.order.subaccountOwner,
-      nonce: params.nonce ?? getTriggerOrderNonce(),
+      nonce: params.nonce ?? getOrderNonce(),
+      appendix: params.order.appendix,
     };
     const signature = await this.sign(
       'place_order',
@@ -94,6 +94,7 @@ export class TriggerClient {
       product_id: params.productId,
       spot_leverage: params.spotLeverage ?? null,
       digest: params.digest ?? null,
+      borrow_margin: params.borrowMargin ?? null,
     };
 
     return this.execute('place_order', executeParams);
@@ -176,6 +177,8 @@ export class TriggerClient {
         pending: params.pending,
         product_id: params.productId,
         digests: params.digests,
+        trigger_types: params.triggerTypes,
+        reduce_only: params.reduceOnly,
         signature,
         tx,
       };

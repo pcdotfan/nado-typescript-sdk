@@ -141,8 +141,6 @@ export type EngineServerQueryRequest<
 export interface EngineServerContractsResponse {
   chain_id: string;
   endpoint_addr: string;
-  // Index is product ID
-  book_addrs: string[];
 }
 
 // Unless in active state, engine is not fully operational
@@ -281,6 +279,7 @@ export interface EngineServerOrder {
   digest: string;
   placed_at: number;
   order_type: string;
+  appendix: string;
   margin: string | null;
 }
 

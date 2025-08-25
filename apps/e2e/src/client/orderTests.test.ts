@@ -4,7 +4,11 @@ import {
   NadoClient,
   PlaceOrderParams,
 } from '@nadohq/client';
-import { getOrderDigest, getOrderNonce } from '@nadohq/contracts';
+import {
+  getOrderDigest,
+  getOrderNonce,
+  packOrderAppendix,
+} from '@nadohq/contracts';
 import test from 'node:test';
 import { debugPrint } from '../utils/debugPrint';
 import { getExpiration } from '../utils/getExpiration';
@@ -42,11 +46,13 @@ async function orderTests(context: RunContext) {
   // This can be shared with spot & perp because 3 & 4 are both BTC
   const orderParams: PlaceOrderParams['order'] = {
     subaccountName: 'default',
-    expiration: getExpiration('post_only', 60).toString(),
+    expiration: getExpiration(),
     price: shortLimitPrice,
     amount: addDecimals(-3.5),
+    appendix: packOrderAppendix({
+      orderExecutionType: 'post_only',
+    }),
   };
-
   const orderResult = await nadoClient.market.placeOrder({
     order: orderParams,
     productId: spotOrderProductId,
@@ -56,11 +62,20 @@ async function orderTests(context: RunContext) {
 
   const orderCustomIdResult = await nadoClient.market.placeOrder({
     id: 100,
-    order: orderParams,
+    order: {
+      ...orderParams,
+      appendix: packOrderAppendix({
+        isolated: {
+          margin: addDecimals(1000),
+        },
+
+        orderExecutionType: 'post_only',
+      }),
+    },
     productId: spotOrderProductId,
   });
 
-  debugPrint('Place order w/ custom id result', orderCustomIdResult);
+  debugPrint('Place iso order w/ custom id result', orderCustomIdResult);
 
   const subaccountOrders =
     await nadoClient.context.engineClient.getSubaccountOrders({
@@ -91,11 +106,8 @@ async function orderTests(context: RunContext) {
 
   const perpOrderDigest = getOrderDigest({
     order: perpOrderResult.orderParams,
-    verifyingAddr:
-      await nadoClient.context.engineClient.getOrderbookAddress(
-        perpOrderProductId,
-      ),
     chainId,
+    productId: perpOrderProductId,
   });
 
   const cancelAndPlaceResult = await nadoClient.market.cancelAndPlace({
@@ -108,7 +120,9 @@ async function orderTests(context: RunContext) {
       // Place a market order
       order: {
         ...orderParams,
-        expiration: getExpiration('fok', 60).toString(),
+        appendix: packOrderAppendix({
+          orderExecutionType: 'ioc',
+        }),
         price: shortMarketPrice,
       },
       productId: perpOrderProductId,

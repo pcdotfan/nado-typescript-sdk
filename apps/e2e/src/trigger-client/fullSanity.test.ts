@@ -1,13 +1,15 @@
 import {
   depositCollateral,
   getOrderDigest,
-  getTriggerOrderNonce,
+  getOrderNonce,
+  getOrderVerifyingAddress,
   MOCK_ERC20_ABI,
   NADO_ABIS,
+  packOrderAppendix,
 } from '@nadohq/contracts';
 import { EngineClient, EngineOrderParams } from '@nadohq/engine-client';
 import { TriggerClient, TriggerPlaceOrderParams } from '@nadohq/trigger-client';
-import { addDecimals, toBigInt } from '@nadohq/utils';
+import { addDecimals, BigDecimal, toBigDecimal, toBigInt } from '@nadohq/utils';
 import test from 'node:test';
 import { getContract } from 'viem';
 import { debugPrint } from '../utils/debugPrint';
@@ -74,22 +76,25 @@ async function fullSanity(context: RunContext) {
   console.log('Done depositing collateral, placing stop orders');
 
   const ethProductId = 3;
-  const ethOrderbookAddr = await engineClient.getOrderbookAddress(ethProductId);
-  const nonce = getTriggerOrderNonce();
+  const ethOrderVerifyingAddr = getOrderVerifyingAddress(ethProductId);
+  const nonce = getOrderNonce();
 
   const shortStopOrder: EngineOrderParams & { nonce: string } = {
     amount: addDecimals(-0.1),
-    expiration: getExpiration('fok'),
+    expiration: getExpiration(),
     nonce,
     price: 1000,
     subaccountName,
     subaccountOwner,
+    appendix: packOrderAppendix({
+      orderExecutionType: 'default',
+    }),
   };
 
   const shortStopDigest = getOrderDigest({
     chainId,
     order: shortStopOrder,
-    verifyingAddr: ethOrderbookAddr,
+    productId: ethProductId,
   });
 
   const shortTriggerParams: TriggerPlaceOrderParams = {
@@ -98,10 +103,13 @@ async function fullSanity(context: RunContext) {
     productId: ethProductId,
     spotLeverage: true,
     triggerCriteria: {
-      type: 'oracle_price_above',
-      triggerPrice: 10000,
+      type: 'price',
+      criteria: {
+        type: 'oracle_price_above',
+        triggerPrice: new BigDecimal(10000),
+      },
     },
-    verifyingAddr: ethOrderbookAddr,
+    verifyingAddr: ethOrderVerifyingAddr,
     nonce,
     id: 1000,
   };
@@ -109,24 +117,26 @@ async function fullSanity(context: RunContext) {
   debugPrint('Short stop order result', shortStopResult.data);
 
   const btcPerpProductId = 2;
-  const btcPerpOrderbookAddr =
-    await engineClient.getOrderbookAddress(btcPerpProductId);
+  const btcPerpOrderVerifyingAddr = getOrderVerifyingAddress(btcPerpProductId);
 
-  const longStopNonce = getTriggerOrderNonce();
+  const longStopNonce = getOrderNonce();
 
   const longStopOrder: EngineOrderParams & { nonce: string } = {
     nonce: longStopNonce,
     amount: addDecimals(0.01),
-    expiration: getExpiration('fok'),
+    expiration: getExpiration(),
     price: 60000,
     subaccountName,
     subaccountOwner,
+    appendix: packOrderAppendix({
+      orderExecutionType: 'ioc',
+    }),
   };
 
   const longStopDigest = getOrderDigest({
     chainId,
     order: longStopOrder,
-    verifyingAddr: ethOrderbookAddr,
+    productId: btcPerpProductId,
   });
 
   const longStopParams: TriggerPlaceOrderParams = {
@@ -134,10 +144,13 @@ async function fullSanity(context: RunContext) {
     order: longStopOrder,
     productId: btcPerpProductId,
     triggerCriteria: {
-      type: 'oracle_price_below',
-      triggerPrice: 60000,
+      type: 'price',
+      criteria: {
+        type: 'oracle_price_below',
+        triggerPrice: toBigDecimal(60000),
+      },
     },
-    verifyingAddr: btcPerpOrderbookAddr,
+    verifyingAddr: btcPerpOrderVerifyingAddr,
     nonce: longStopNonce,
   };
 
@@ -145,21 +158,24 @@ async function fullSanity(context: RunContext) {
 
   debugPrint('Long stop order result', longStopResult);
 
-  const shortStopMidBookNonce = getTriggerOrderNonce();
+  const shortStopMidBookNonce = getOrderNonce();
 
   const shortStopMidBookOrder: EngineOrderParams & { nonce: string } = {
     amount: addDecimals(-0.2),
-    expiration: getExpiration('fok'),
+    expiration: getExpiration(),
     nonce: shortStopMidBookNonce,
     price: 1000,
     subaccountName,
     subaccountOwner,
+    appendix: packOrderAppendix({
+      orderExecutionType: 'default',
+    }),
   };
 
   const shortStopMidBookDigest = getOrderDigest({
     chainId,
     order: shortStopMidBookOrder,
-    verifyingAddr: ethOrderbookAddr,
+    productId: ethProductId,
   });
 
   const marketPrice = await engineClient.getMarketPrice({
@@ -173,10 +189,13 @@ async function fullSanity(context: RunContext) {
     productId: ethProductId,
     spotLeverage: true,
     triggerCriteria: {
-      type: 'mid_price_above',
-      triggerPrice: midPrice.multipliedBy(2),
+      type: 'price',
+      criteria: {
+        type: 'mid_price_above',
+        triggerPrice: midPrice.multipliedBy(2),
+      },
     },
-    verifyingAddr: ethOrderbookAddr,
+    verifyingAddr: ethOrderVerifyingAddr,
     nonce,
     id: 1000,
   };
@@ -185,6 +204,126 @@ async function fullSanity(context: RunContext) {
   );
   debugPrint('Short stop mid-book order result', shortStopMidBookResult.data);
 
+  // Test reduce_only orders
+  const reduceOnlyOrder: EngineOrderParams = {
+    amount: addDecimals(-0.1),
+    expiration: getExpiration(),
+    price: 1000,
+    subaccountName,
+    subaccountOwner,
+    appendix: packOrderAppendix({
+      reduceOnly: true,
+      orderExecutionType: 'default',
+    }),
+  };
+  const reduceOnlyTriggerParams: TriggerPlaceOrderParams = {
+    chainId,
+    order: reduceOnlyOrder,
+    productId: ethProductId,
+    spotLeverage: true,
+    triggerCriteria: {
+      type: 'price',
+      criteria: {
+        type: 'mid_price_above',
+        triggerPrice: midPrice.multipliedBy(1.5),
+      },
+    },
+    verifyingAddr: ethOrderVerifyingAddr,
+  };
+
+  const reduceOnlyResult = await client.placeTriggerOrder(
+    reduceOnlyTriggerParams,
+  );
+  debugPrint('Reduce-only order result', reduceOnlyResult.data);
+
+  // Test isolated orders
+  const isolatedOrder: EngineOrderParams = {
+    amount: addDecimals(0.15),
+    expiration: getExpiration(),
+    price: 3000,
+    subaccountName,
+    subaccountOwner,
+    appendix: packOrderAppendix({
+      orderExecutionType: 'default',
+      isolated: {
+        margin: addDecimals(100),
+      },
+    }),
+  };
+
+  const isolatedTriggerParams: TriggerPlaceOrderParams = {
+    chainId,
+    order: isolatedOrder,
+    productId: ethProductId,
+    spotLeverage: true,
+    triggerCriteria: {
+      type: 'price',
+      criteria: {
+        type: 'mid_price_below',
+        triggerPrice: midPrice.multipliedBy(0.8),
+      },
+    },
+    verifyingAddr: ethOrderVerifyingAddr,
+  };
+
+  const isolatedResult = await client.placeTriggerOrder(isolatedTriggerParams);
+  debugPrint('Isolated order result', isolatedResult.data);
+
+  // Test TWAP orders
+  const twapOrder: EngineOrderParams = {
+    amount: addDecimals(1),
+    expiration: getExpiration(),
+    price: 950,
+    subaccountName,
+    subaccountOwner,
+    appendix: packOrderAppendix({
+      orderExecutionType: 'default',
+      triggerType: 'twap',
+      twap: {
+        numOrders: 5,
+        slippageFrac: 0.01, // 1% slippage
+      },
+    }),
+  };
+
+  const twapTriggerParams: TriggerPlaceOrderParams = {
+    chainId,
+    order: twapOrder,
+    productId: ethProductId,
+    spotLeverage: true,
+    triggerCriteria: {
+      type: 'time',
+      criteria: {
+        interval: 30,
+      },
+    },
+    verifyingAddr: ethOrderVerifyingAddr,
+    id: 4000,
+  };
+
+  const twapResult = await client.placeTriggerOrder(twapTriggerParams);
+  debugPrint('TWAP order result', twapResult.data);
+
+  const reduceOnlyOrdersResult = await client.listOrders({
+    chainId,
+    pending: true,
+    subaccountName,
+    subaccountOwner,
+    verifyingAddr: endpointAddr,
+    reduceOnly: true,
+  });
+  debugPrint('Pending reduce-only orders result', reduceOnlyOrdersResult);
+
+  const twapOrdersResult = await client.listOrders({
+    chainId,
+    pending: true,
+    subaccountName,
+    subaccountOwner,
+    verifyingAddr: endpointAddr,
+    triggerTypes: ['twap'],
+  });
+  debugPrint('Pending TWAP orders result', twapOrdersResult);
+
   const pendingListOrdersResult = await client.listOrders({
     chainId,
     pending: true,
@@ -192,8 +331,7 @@ async function fullSanity(context: RunContext) {
     subaccountOwner,
     verifyingAddr: endpointAddr,
   });
-
-  debugPrint('Pending list orders result', pendingListOrdersResult);
+  debugPrint('Pending list all trigger orders result', pendingListOrdersResult);
 
   const pendingListOrdersForProductResult = await client.listOrders({
     chainId,

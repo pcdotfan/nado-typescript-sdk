@@ -1,5 +1,6 @@
 import {
   encodeSignedOrder,
+  getOrderVerifyingAddress,
   MarketWithProduct,
   subaccountToHex,
 } from '@nadohq/contracts';
@@ -75,7 +76,6 @@ export class EngineQueryClient extends EngineBaseClient {
     return {
       chainId: Number(baseResponse.chain_id),
       endpointAddr: baseResponse.endpoint_addr,
-      orderbookAddrs: baseResponse.book_addrs,
     };
   }
 
@@ -285,7 +285,7 @@ export class EngineQueryClient extends EngineBaseClient {
       order: params.order,
       signature: await this.sign(
         'place_order',
-        params.orderbookAddr,
+        getOrderVerifyingAddress(params.productId),
         params.chainId,
         params.order,
       ),
@@ -539,15 +539,5 @@ export class EngineQueryClient extends EngineBaseClient {
     const baseResponse = await this.query('insurance', {});
 
     return toBigDecimal(baseResponse.insurance);
-  }
-
-  /**
-   * Gets the orderbook contract address for a given product
-   * @param productId
-   * @returns
-   */
-  public async getOrderbookAddress(productId: number): Promise<string> {
-    const contracts = await this.getContracts();
-    return contracts.orderbookAddrs[productId];
   }
 }

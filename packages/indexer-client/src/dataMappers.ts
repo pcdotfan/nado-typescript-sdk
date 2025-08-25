@@ -1,11 +1,11 @@
 import {
   getRecvTimeFromOrderNonce,
   Market,
-  parseRawExpirationTimestamp,
   PerpMarket,
   ProductEngineType,
   SpotMarket,
   subaccountFromHex,
+  unpackOrderAppendix,
 } from '@nadohq/contracts';
 import {
   mapEngineServerPerpProduct,
@@ -28,6 +28,7 @@ import {
   IndexerMaker,
   IndexerMarketSnapshot,
   IndexerMatchEventBalances,
+  IndexerNlpSnapshot,
   IndexerOrder,
   IndexerPerpBalance,
   IndexerPerpPrices,
@@ -42,16 +43,15 @@ import {
   IndexerServerMaker,
   IndexerServerMarketSnapshot,
   IndexerServerMatchEventBalances,
+  IndexerServerNlpSnapshot,
   IndexerServerOrder,
   IndexerServerPerpPrices,
   IndexerServerProduct,
   IndexerServerProductPayment,
   IndexerServerSnapshotsInterval,
   IndexerServerTx,
-  IndexerServerNlpSnapshot,
   IndexerSnapshotsIntervalParams,
   IndexerSpotBalance,
-  IndexerNlpSnapshot,
 } from './types';
 
 export function mapSnapshotsIntervalToServerParams(
@@ -92,16 +92,13 @@ export function mapIndexerServerBalance(
 }
 
 export function mapIndexerOrder(order: IndexerServerOrder): IndexerOrder {
-  const expiration = toBigDecimal(order.expiration);
-  const expirationEncodedData = parseRawExpirationTimestamp(order.expiration);
+  const appendix = unpackOrderAppendix(order.appendix);
   return {
     amount: toBigDecimal(order.amount),
     digest: order.digest,
     isolated: order.isolated,
-    rawExpiration: expiration,
-    isReduceOnly: expirationEncodedData.reduceOnly,
-    expiration: expirationEncodedData.expirationTime,
-    orderType: expirationEncodedData.type,
+    expiration: Number(order.expiration),
+    appendix,
     nonce: toBigDecimal(order.nonce),
     recvTimeSeconds: getRecvTimeFromOrderNonce(order.nonce) / 1000,
     price: removeDecimals(order.price_x18),

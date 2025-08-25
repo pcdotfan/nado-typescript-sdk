@@ -99,6 +99,7 @@ export interface IndexerServerOrder {
   amount: string;
   price_x18: string;
   expiration: string;
+  appendix: string;
   nonce: string;
   base_filled: string;
   // Includes fee

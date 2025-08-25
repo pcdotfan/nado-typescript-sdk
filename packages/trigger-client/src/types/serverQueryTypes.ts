@@ -21,6 +21,8 @@ export type TriggerServerOrderStatus =
  * Request types
  */
 
+export type TriggerServerTriggerTypeFilter = 'price_trigger' | 'twap';
+
 export interface TriggerServerListTriggerOrdersParams
   extends SignedTx<EIP712ListTriggerOrdersValues> {
   pending: boolean;
@@ -29,6 +31,8 @@ export interface TriggerServerListTriggerOrdersParams
   max_update_time?: number;
   digests?: string[];
   limit?: number;
+  trigger_types?: TriggerServerTriggerTypeFilter[];
+  reduce_only?: boolean;
 }
 
 export interface TriggerServerQueryRequestByType {

@@ -1,6 +1,5 @@
 import {
   EIP712BurnNlpValues,
-  EIP712IsolatedOrderParams,
   EIP712LinkSignerValues,
   EIP712LiquidateSubaccountValues,
   EIP712MintNlpValues,
@@ -16,7 +15,10 @@ import { EngineServerOrderResponse } from './serverQueryTypes';
 
 export interface EngineServerPlaceOrderResponse {
   digest: string;
+  error: string | null;
 }
+
+export type EngineServerPlaceOrdersResponse = EngineServerPlaceOrderResponse[];
 
 export interface EngineServerCancelOrdersResponse {
   cancelled_orders: EngineServerOrderResponse[];
@@ -30,8 +32,8 @@ export interface EngineServerExecuteResponseDataByType {
   link_signer: null;
   liquidate_subaccount: null;
   mint_nlp: null;
-  place_isolated_order: EngineServerPlaceOrderResponse;
   place_order: EngineServerPlaceOrderResponse;
+  place_orders: EngineServerPlaceOrdersResponse;
   transfer_quote: null;
   withdraw_collateral: null;
 }
@@ -71,15 +73,7 @@ export interface EngineServerPlaceOrderParams {
   signature: string;
   // Engine defaults this to true
   spot_leverage: boolean | null;
-}
-
-export interface EngineServerPlaceIsolatedOrderParams {
-  id: number | null;
-  product_id: number;
-  isolated_order: EIP712OrderValues;
-  // Bytes
-  signature: string;
-  // Engine defaults this to false
+  // For isolated orders, this specifies whether margin can be borrowed (i.e. whether the cross account can have a negative USDC balance)
   borrow_margin: boolean | null;
 }
 
@@ -116,8 +110,8 @@ export interface EngineServerExecuteRequestByType {
   link_signer: SignedTx<EIP712LinkSignerValues>;
   liquidate_subaccount: SignedTx<EIP712LiquidateSubaccountValues>;
   mint_nlp: WithSpotLeverage<SignedTx<EIP712MintNlpValues>>;
-  place_isolated_order: EngineServerPlaceIsolatedOrderParams;
   place_order: EngineServerPlaceOrderParams;
+  place_orders: EngineServerPlaceOrderParams[];
   transfer_quote: SignedTx<EIP712TransferQuoteValues>;
   withdraw_collateral: WithSpotLeverage<
     SignedTx<EIP712WithdrawCollateralValues>
@@ -130,9 +124,4 @@ export type EngineServerExecuteRequestType =
 export interface EngineServerExecutePlaceOrderPayload {
   payload: EngineServerExecuteRequestByType['place_order'];
   orderParams: EIP712OrderParams;
-}
-
-export interface EngineServerExecutePlaceIsolatedOrderPayload {
-  payload: EngineServerExecuteRequestByType['place_isolated_order'];
-  orderParams: EIP712IsolatedOrderParams;
 }

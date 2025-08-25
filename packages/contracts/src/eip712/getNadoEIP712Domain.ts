@@ -12,8 +12,7 @@ export function getNadoEIP712Domain(
   chainId: number,
 ): TypedDataDomain {
   return {
-    // TODO: Rename to Nado
-    name: 'Vertex',
+    name: 'Nado',
     version: '0.0.1',
     chainId,
     verifyingContract: getValidatedAddress(contractAddress),
