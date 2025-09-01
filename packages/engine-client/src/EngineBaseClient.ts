@@ -3,8 +3,8 @@ import {
   SignableRequestType,
   SignableRequestTypeToParams,
   WalletClientWithAccount,
+  WalletNotProvidedError,
 } from '@nadohq/shared';
-import { WalletNotProvidedError } from '@nadohq/shared';
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import {
   EngineServerExecuteRequestByType,
@@ -49,6 +49,8 @@ export class EngineBaseClient {
     this.opts = opts;
     this.axiosInstance = axios.create({
       withCredentials: true,
+      // We have custom logic to validate response status and create an appropriate error
+      validateStatus: () => true,
     });
   }
 
@@ -206,7 +208,7 @@ export class EngineBaseClient {
   private checkResponseStatus(response: AxiosResponse) {
     if (response.status !== 200 || !response.data) {
       throw Error(
-        `Unexpected response from server: ${response.status} ${response.statusText}`,
+        `Unexpected response from server: ${response.status} ${response.statusText}. Data: ${response.data}`,
       );
     }
   }

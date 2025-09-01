@@ -4,21 +4,19 @@ import {
   getDefaultRecvTime,
   getNadoEIP712Values,
   getSignedTransactionRequest,
+  getValidatedHex,
+  mapValues,
+  nowInSeconds,
+  removeDecimals,
   SignableRequestType,
   SignableRequestTypeToParams,
   SignedTx,
   subaccountFromHex,
   subaccountToHex,
-  WalletClientWithAccount,
-} from '@nadohq/shared';
-import {
-  getValidatedHex,
-  mapValues,
-  nowInSeconds,
-  removeDecimals,
   toBigDecimal,
   toBigInt,
   toIntegerString,
+  WalletClientWithAccount,
   WalletNotProvidedError,
 } from '@nadohq/shared';
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
@@ -33,11 +31,11 @@ import {
   mapIndexerMakerStatistics,
   mapIndexerMarketSnapshot,
   mapIndexerMatchEventBalances,
+  mapIndexerNlpSnapshot,
   mapIndexerOrder,
   mapIndexerPerpPrices,
   mapIndexerProductPayment,
   mapIndexerServerProduct,
-  mapIndexerNlpSnapshot,
   mapSnapshotsIntervalToServerParams,
 } from './dataMappers';
 import {
@@ -80,6 +78,8 @@ import {
   GetIndexerMultiProductSnapshotsResponse,
   GetIndexerMultiSubaccountSnapshotsParams,
   GetIndexerMultiSubaccountSnapshotsResponse,
+  GetIndexerNlpSnapshotsParams,
+  GetIndexerNlpSnapshotsResponse,
   GetIndexerOraclePricesParams,
   GetIndexerOraclePricesResponse,
   GetIndexerOrdersParams,
@@ -91,8 +91,8 @@ import {
   GetIndexerQuotePriceResponse,
   GetIndexerReferralCodeParams,
   GetIndexerReferralCodeResponse,
-  GetIndexerNlpSnapshotsParams,
-  GetIndexerNlpSnapshotsResponse,
+  GetIndexerSubaccountDDAParams,
+  GetIndexerSubaccountDDAResponse,
   IndexerEventWithTx,
   IndexerMatchEvent,
   IndexerOraclePrice,
@@ -104,10 +104,8 @@ import {
   IndexerSubaccountSnapshot,
   ListIndexerSubaccountsParams,
   ListIndexerSubaccountsResponse,
-  GetIndexerSubaccountDDAParams,
   UpdateIndexerLeaderboardRegistrationParams,
   UpdateIndexerLeaderboardRegistrationResponse,
-  GetIndexerSubaccountDDAResponse,
 } from './types';
 
 export interface IndexerClientOpts {
@@ -132,6 +130,8 @@ export class IndexerBaseClient {
     this.opts = opts;
     this.axiosInstance = axios.create({
       withCredentials: true,
+      // We have custom logic to validate response status and create an appropriate error
+      validateStatus: () => true,
     });
     this.v2Url = opts.v2Url ? opts.v2Url : opts.url.replace('v1', 'v2');
   }

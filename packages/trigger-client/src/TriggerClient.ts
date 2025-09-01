@@ -9,9 +9,10 @@ import {
   getSignedTransactionRequest,
   SignableRequestType,
   SignableRequestTypeToParams,
+  toIntegerString,
   WalletClientWithAccount,
+  WalletNotProvidedError,
 } from '@nadohq/shared';
-import { toIntegerString, WalletNotProvidedError } from '@nadohq/shared';
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { mapServerOrderInfo, mapTriggerCriteria } from './dataMappers';
 import {
@@ -51,7 +52,11 @@ export class TriggerClient {
 
   constructor(opts: TriggerClientOpts) {
     this.opts = opts;
-    this.axiosInstance = axios.create({ withCredentials: true });
+    this.axiosInstance = axios.create({
+      withCredentials: true,
+      // We have custom logic to validate response status and create an appropriate error
+      validateStatus: () => true,
+    });
   }
 
   /**
@@ -270,7 +275,7 @@ export class TriggerClient {
   private checkResponseStatus(response: AxiosResponse) {
     if (response.status !== 200 || !response.data) {
       throw Error(
-        `Unexpected response from server: ${response.status} ${response.statusText}`,
+        `Unexpected response from server: ${response.status} ${response.statusText}. Data: ${response.data}`,
       );
     }
   }

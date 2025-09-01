@@ -18,8 +18,6 @@ export class EngineWebClient extends EngineBaseClient {
       this.axiosInstance
         // Use the /time endpoint and listen to 403 responses
         .get(`${this.opts.url}/ip`, {
-          // Allow all statuses
-          validateStatus: () => true,
           // IP checks go through Cloudflare, which uses allow-origin as *, so withCredentials needs to be false
           withCredentials: false,
         })

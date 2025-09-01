@@ -1,5 +1,5 @@
-import { EngineServerQueryFailureResponse } from './serverQueryTypes';
 import { EngineServerExecuteFailureResult } from './serverExecuteTypes';
+import { EngineServerQueryFailureResponse } from './serverQueryTypes';
 
 export class EngineServerFailureError extends Error {
   constructor(
@@ -7,6 +7,6 @@ export class EngineServerFailureError extends Error {
       | EngineServerQueryFailureResponse
       | EngineServerExecuteFailureResult,
   ) {
-    super();
+    super(`${responseData.error_code}: ${responseData.error_code}`);
   }
 }

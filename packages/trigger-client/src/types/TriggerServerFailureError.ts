@@ -1,5 +1,5 @@
-import { TriggerServerQueryFailureResponse } from './serverQueryTypes';
 import { EngineServerExecuteFailureResult } from '@nadohq/engine-client';
+import { TriggerServerQueryFailureResponse } from './serverQueryTypes';
 
 export class TriggerServerFailureError extends Error {
   constructor(
@@ -7,6 +7,6 @@ export class TriggerServerFailureError extends Error {
       | TriggerServerQueryFailureResponse
       | EngineServerExecuteFailureResult,
   ) {
-    super();
+    super(`${responseData.error_code}: ${responseData.error}`);
   }
 }
