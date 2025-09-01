@@ -65,6 +65,7 @@ export interface SpotProduct extends BaseProduct {
   interestInflectionUtil: BigDecimal;
   interestSmallCap: BigDecimal;
   interestLargeCap: BigDecimal;
+  minDepositRate: BigDecimal;
 
   // Total deposited for this product
   totalDeposited: BigDecimal;

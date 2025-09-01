@@ -116,7 +116,6 @@ export interface EngineServerQueryRequestByType {
   max_nlp_mintable: EngineServerMaxMintNlpQueryParams;
   max_order_size: EngineServerMaxOrderSizeQueryParams;
   max_withdrawable: EngineServerMaxWithdrawableQueryParams;
-  min_deposit_rates: Record<string, never>;
   nonces: EngineServerNoncesParams;
   order: EngineServerGetOrderQueryParams;
   orders: EngineServerOrdersQueryParams;
@@ -313,16 +312,6 @@ export interface EngineInsuranceResponse {
   insurance: string;
 }
 
-export interface EngineServerMinDepositRate {
-  product_id: number;
-  min_deposit_rate_x18: string;
-}
-
-export interface EngineServerMinDepositRatesResponse {
-  // product_id -> EngineServerMinDepositRate
-  min_deposit_rates: Record<number, EngineServerMinDepositRate>;
-}
-
 export interface EngineServerEdgeAllProductsResponse {
   // chain_id -> EngineServerAllProductsResponse
   edge_all_products: Record<number, EngineServerAllProductsResponse>;
@@ -347,7 +336,6 @@ export interface EngineServerQueryResponseByType {
   max_nlp_mintable: EngineServerMaxMintNlpResponse;
   max_order_size: EngineServerMaxOrderSizeResponse;
   max_withdrawable: EngineServerMaxWithdrawableResponse;
-  min_deposit_rates: EngineServerMinDepositRatesResponse;
   nonces: EngineServerNoncesResponse;
   order: EngineServerOrderResponse;
   orders: EngineServerProductOrdersResponse;

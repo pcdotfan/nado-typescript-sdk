@@ -1,14 +1,12 @@
 import {
-  encodeSignedOrder,
-  getOrderVerifyingAddress,
-  MarketWithProduct,
-  subaccountToHex,
-} from '@nadohq/shared';
-import {
   addDecimals,
   BigDecimal,
+  encodeSignedOrder,
+  getOrderVerifyingAddress,
   mapValues,
+  MarketWithProduct,
   removeDecimals,
+  subaccountToHex,
   toBigDecimal,
   toIntegerString,
 } from '@nadohq/shared';
@@ -38,7 +36,6 @@ import {
   GetEngineMaxOrderSizeResponse,
   GetEngineMaxWithdrawableParams,
   GetEngineMaxWithdrawableResponse,
-  GetEngineMinDepositRatesResponse,
   GetEngineOrderParams,
   GetEngineOrderResponse,
   GetEngineSubaccountFeeRatesParams,
@@ -238,22 +235,6 @@ export class EngineQueryClient extends EngineBaseClient {
           };
         },
       ),
-    };
-  }
-
-  /**
-   * Retrieves min deposit rates for all spot products from the engine
-   */
-  async getMinDepositRates(): Promise<GetEngineMinDepositRatesResponse> {
-    const baseResponse = await this.query('min_deposit_rates', {});
-
-    return {
-      minDepositRates: mapValues(baseResponse.min_deposit_rates, (m) => {
-        return {
-          productId: m.product_id,
-          minDepositRate: removeDecimals(m.min_deposit_rate_x18),
-        };
-      }),
     };
   }
 

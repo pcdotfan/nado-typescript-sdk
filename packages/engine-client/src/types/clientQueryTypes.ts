@@ -237,15 +237,6 @@ export interface GetEngineLinkedSignerResponse {
 
 export type GetEngineInsuranceResponse = BigDecimal;
 
-export interface EngineMinDepositRate {
-  productId: number;
-  minDepositRate: BigDecimal;
-}
-
-export interface GetEngineMinDepositRatesResponse {
-  minDepositRates: Record<number, EngineMinDepositRate>;
-}
-
 /**
  * Given an IP, backend will either:
  * - Allow queries only through archive / engine (query_only)

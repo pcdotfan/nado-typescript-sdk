@@ -86,6 +86,7 @@ export function mapEngineServerSpotProduct(
       ),
       interestLargeCap: removeDecimals(product.config.interest_large_cap_x18),
       interestSmallCap: removeDecimals(product.config.interest_small_cap_x18),
+      minDepositRate: removeDecimals(product.config.min_deposit_rate_x18),
       longWeightInitial: removeDecimals(product.risk.long_weight_initial_x18),
       longWeightMaintenance: removeDecimals(
         product.risk.long_weight_maintenance_x18,

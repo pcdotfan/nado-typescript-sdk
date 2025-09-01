@@ -35,6 +35,7 @@ export interface EngineServerSpotConfig {
   interest_floor_x18: string;
   interest_small_cap_x18: string;
   interest_large_cap_x18: string;
+  min_deposit_rate_x18: string;
 }
 
 export interface EngineServerSpotState {

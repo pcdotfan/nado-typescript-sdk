@@ -1,8 +1,8 @@
 import { EngineClient } from '@nadohq/engine-client';
-import { RunContext } from '../utils/types';
-import { runWithContext } from '../utils/runWithContext';
 import test from 'node:test';
 import { debugPrint } from '../utils/debugPrint';
+import { runWithContext } from '../utils/runWithContext';
+import { RunContext } from '../utils/types';
 
 async function queryTests(context: RunContext) {
   const walletClient = context.getWalletClient();
@@ -30,9 +30,6 @@ async function queryTests(context: RunContext) {
 
   const insurance = await client.getInsurance();
   debugPrint('Insurance', insurance);
-
-  const minDepositRates = await client.getMinDepositRates();
-  debugPrint('Min deposit rates', minDepositRates);
 }
 
 void test('[engine-client]: Running query tests', () =>
