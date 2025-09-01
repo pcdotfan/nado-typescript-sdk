@@ -2,13 +2,15 @@ import {
   BalanceHealthContributions,
   calcTotalBorrowed,
   calcTotalDeposited,
+  mapValues,
   PerpMarket,
   ProductEngineType,
+  removeDecimals,
   SpotMarket,
   subaccountFromHex,
+  toBigDecimal,
   unpackOrderAppendix,
 } from '@nadohq/shared';
-import { mapValues, removeDecimals, toBigDecimal } from '@nadohq/shared';
 import {
   EngineMarketPrice,
   EngineOrder,
@@ -52,7 +54,6 @@ export function mapEngineServerOrder(
     subaccountName: subaccount.subaccountName,
     totalAmount: toBigDecimal(order.amount),
     unfilledAmount: toBigDecimal(order.unfilled_amount),
-    margin: order.margin ? toBigDecimal(order.margin) : null,
     placementTime: order.placed_at,
     appendix: unpackOrderAppendix(order.appendix),
   };

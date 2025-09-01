@@ -280,7 +280,6 @@ export interface EngineServerOrder {
   placed_at: number;
   order_type: string;
   appendix: string;
-  margin: string | null;
 }
 
 export type EngineServerOrderResponse = EngineServerOrder;

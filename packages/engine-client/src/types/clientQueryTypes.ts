@@ -2,6 +2,7 @@ import {
   BalanceHealthContributions,
   BalanceSide,
   BalanceWithProduct,
+  BigDecimal,
   EIP712OrderParams,
   HealthGroup,
   HealthStatusByType,
@@ -13,7 +14,6 @@ import {
   SpotBalanceWithProduct,
   Subaccount,
 } from '@nadohq/shared';
-import { BigDecimal } from '@nadohq/shared';
 import {
   EngineServerNoncesParams,
   EngineServerTimeResponse,
@@ -109,8 +109,6 @@ export interface EngineOrder extends Subaccount {
   // Amount still unfilled
   unfilledAmount: BigDecimal;
   expiration: number;
-  // Margin being transferred for the order, will be null if not an iso order
-  margin: BigDecimal | null;
   nonce: string;
   digest: string;
   placementTime: number;
