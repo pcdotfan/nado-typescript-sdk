@@ -1,4 +1,6 @@
+import { EngineClient, EngineOrderParams } from '@nadohq/engine-client';
 import {
+  addDecimals,
   createDeterministicLinkedSignerPrivateKey,
   getOrderDigest,
   getOrderNonce,
@@ -8,8 +10,6 @@ import {
   QUOTE_PRODUCT_ID,
   subaccountToHex,
 } from '@nadohq/shared';
-import { EngineClient, EngineOrderParams } from '@nadohq/engine-client';
-import { addDecimals } from '@nadohq/shared';
 import test from 'node:test';
 import { createWalletClient, getContract, http, zeroAddress } from 'viem';
 import { privateKeyToAccount } from 'viem/accounts';
@@ -115,7 +115,7 @@ async function signerAndOrderTests(context: RunContext) {
   }
 
   const subaccountOrders = await client.getSubaccountOrders({
-    productId: 2,
+    productId: perpProductId,
     subaccountName: 'default',
     subaccountOwner: walletClientAddress,
   });
@@ -133,7 +133,7 @@ async function signerAndOrderTests(context: RunContext) {
   debugPrint('Market price', marketPrice);
 
   const marketPrices = await client.getMarketPrices({
-    productIds: [spotProductId, 2, 3],
+    productIds: [spotProductId, perpProductId, 3],
   });
   debugPrint('Market prices', marketPrices);
 

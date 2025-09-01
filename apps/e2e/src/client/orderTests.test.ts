@@ -30,8 +30,10 @@ async function orderTests(context: RunContext) {
   // Query all markets for price information
   const allMarkets = await nadoClient.market.getAllMarkets();
 
-  // Place spot order
   const spotOrderProductId = 3;
+  const perpOrderProductId = 4;
+
+  // Place spot order
   const spotOrderProductOraclePrice = allMarkets.find(
     (market) => market.productId === spotOrderProductId,
   )!.product.oraclePrice;
@@ -68,11 +70,10 @@ async function orderTests(context: RunContext) {
         isolated: {
           margin: addDecimals(1000),
         },
-
         orderExecutionType: 'post_only',
       }),
     },
-    productId: spotOrderProductId,
+    productId: perpOrderProductId,
   });
 
   debugPrint('Place iso order w/ custom id result', orderCustomIdResult);
@@ -94,8 +95,6 @@ async function orderTests(context: RunContext) {
   });
 
   debugPrint('Cancel order result', cancelResult);
-
-  const perpOrderProductId = 4;
 
   const perpOrderResult = await nadoClient.market.placeOrder({
     order: orderParams,
