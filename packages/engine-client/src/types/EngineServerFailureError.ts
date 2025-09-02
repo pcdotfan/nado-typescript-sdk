@@ -7,6 +7,6 @@ export class EngineServerFailureError extends Error {
       | EngineServerQueryFailureResponse
       | EngineServerExecuteFailureResult,
   ) {
-    super(`${responseData.error_code}: ${responseData.error_code}`);
+    super(`${responseData.error_code}: ${responseData.error}`);
   }
 }
