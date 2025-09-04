@@ -1,4 +1,4 @@
-export * from './appendixTWAPValue';
+export * from './appendixTwapValue';
 export * from './unpackOrderAppendix';
 export * from './packOrderAppendix';
 export * from './types';

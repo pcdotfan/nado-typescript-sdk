@@ -1,6 +1,11 @@
-import { QUOTE_PRODUCT_ID, Subaccount } from '@nadohq/shared';
 import { IndexerClient } from '@nadohq/indexer-client';
-import { nowInSeconds, TimeInSeconds, toBigDecimal } from '@nadohq/shared';
+import {
+  nowInSeconds,
+  QUOTE_PRODUCT_ID,
+  Subaccount,
+  TimeInSeconds,
+  toBigDecimal,
+} from '@nadohq/shared';
 import test from 'node:test';
 import { debugPrint } from '../utils/debugPrint';
 import { runWithContext } from '../utils/runWithContext';
@@ -31,6 +36,12 @@ async function subaccountQueriesTests(context: RunContext) {
   });
 
   debugPrint('Linked Signer', linkedSigner);
+
+  const dda = await client.getSubaccountDDA({
+    subaccount,
+  });
+
+  debugPrint('DDA', dda);
 
   const referralCode = await client.getReferralCode({
     subaccount,

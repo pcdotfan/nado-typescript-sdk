@@ -13,7 +13,7 @@ export type OrderAppendixTriggerType =
 /**
  * Fields associated with a TWAP trigger order.
  */
-export interface OrderAppendixTWAPFields {
+export interface OrderAppendixTwapFields {
   /**
    * Number of TWAP orders to be placed.
    */
@@ -54,5 +54,5 @@ export interface OrderAppendix {
    * Specify if the order is a TWAP order
    * An order CANNOT be both a TWAP order and an isolated order.
    */
-  twap?: OrderAppendixTWAPFields;
+  twap?: OrderAppendixTwapFields;
 }

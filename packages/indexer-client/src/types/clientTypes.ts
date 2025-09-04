@@ -1,4 +1,5 @@
 import {
+  BigDecimal,
   EIP712OrderValues,
   Market,
   OrderAppendix,
@@ -9,7 +10,6 @@ import {
   SpotMarket,
   Subaccount,
 } from '@nadohq/shared';
-import { BigDecimal } from '@nadohq/shared';
 import { Hex } from 'viem';
 import { CandlestickPeriod } from './CandlestickPeriod';
 import { IndexerEventType } from './IndexerEventType';
@@ -676,7 +676,9 @@ export interface GetIndexerBacklogResponse {
   txsPerSecond: BigDecimal | null;
 }
 
-export type GetIndexerSubaccountDDAParams = Subaccount;
+export interface GetIndexerSubaccountDDAParams {
+  subaccount: Subaccount;
+}
 
 export interface GetIndexerSubaccountDDAResponse {
   address: string;

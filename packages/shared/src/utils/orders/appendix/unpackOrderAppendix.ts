@@ -1,6 +1,6 @@
 import { OrderAppendix } from '../../../types/orderAppendixTypes';
 import { BigDecimalish, toBigInt } from '../../math';
-import { unpackTWAPOrderAppendixValue } from './appendixTWAPValue';
+import { unpackTwapOrderAppendixValue } from './appendixTwapValue';
 import { bitMaskValue } from './bitMaskValue';
 import { PackedOrderAppendixBits } from './types';
 
@@ -41,7 +41,7 @@ function mapBitValuesToAppendix(bits: PackedOrderAppendixBits): OrderAppendix {
   })();
   const twapFields = (() => {
     if (triggerType === 'twap' || triggerType === 'twap_custom_amounts') {
-      return unpackTWAPOrderAppendixValue(bits.value);
+      return unpackTwapOrderAppendixValue(bits.value);
     }
   })();
 

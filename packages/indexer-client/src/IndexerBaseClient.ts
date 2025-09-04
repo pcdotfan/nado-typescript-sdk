@@ -797,10 +797,7 @@ export class IndexerBaseClient {
     params: GetIndexerSubaccountDDAParams,
   ): Promise<GetIndexerSubaccountDDAResponse> {
     const baseResponse = await this.query('direct_deposit_address', {
-      subaccount: subaccountToHex({
-        subaccountOwner: params.subaccountOwner,
-        subaccountName: params.subaccountName,
-      }),
+      subaccount: subaccountToHex(params.subaccount),
     });
 
     return {

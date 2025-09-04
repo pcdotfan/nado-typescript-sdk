@@ -1,4 +1,4 @@
-import { OrderAppendixTWAPFields } from '../../../types/orderAppendixTypes';
+import { OrderAppendixTwapFields } from '../../../types/orderAppendixTypes';
 import { addDecimals, removeDecimals, toBigInt } from '../../math';
 
 /**
@@ -14,10 +14,10 @@ import { addDecimals, removeDecimals, toBigInt } from '../../math';
  * - `slippage_x6` occupies bits 63..32 (middle 32 bits)
  * - `reserved` occupies bits 31..0 (least significant 32 bits)
  */
-export function packTWAPOrderAppendixValue({
+export function packTwapOrderAppendixValue({
   numOrders,
   slippageFrac,
-}: OrderAppendixTWAPFields): bigint {
+}: OrderAppendixTwapFields): bigint {
   const numOrdersBigInt = toBigInt(numOrders);
   const slippageX6BigInt = toBigInt(addDecimals(slippageFrac, 6));
 
@@ -38,9 +38,9 @@ export function packTWAPOrderAppendixValue({
  *   - slippage_x6: number, from bits 63..32
  *   - reserved: number, from bits 31..0
  */
-export function unpackTWAPOrderAppendixValue(
+export function unpackTwapOrderAppendixValue(
   value: bigint,
-): OrderAppendixTWAPFields {
+): OrderAppendixTwapFields {
   const numOrders = (value >> 64n) & 0xffffffffn;
   const slippageX6 = (value >> 32n) & 0xffffffffn;
 

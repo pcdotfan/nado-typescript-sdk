@@ -1,6 +1,6 @@
 import { OrderAppendix } from '../../../types/orderAppendixTypes';
 import { toBigInt } from '../../math/toBigInt';
-import { packTWAPOrderAppendixValue } from './appendixTWAPValue';
+import { packTwapOrderAppendixValue } from './appendixTwapValue';
 import { bitMaskValue } from './bitMaskValue';
 import { PackedOrderAppendixBits } from './types';
 
@@ -9,7 +9,7 @@ function mapOrderAppendixToBitValues(
 ): PackedOrderAppendixBits {
   const value = (() => {
     if (appendix.twap) {
-      return packTWAPOrderAppendixValue(appendix.twap);
+      return packTwapOrderAppendixValue(appendix.twap);
     }
     if (appendix.isolated) {
       return toBigInt(appendix.isolated.margin);
