@@ -94,7 +94,6 @@ export function mapIndexerOrder(order: IndexerServerOrder): IndexerOrder {
   return {
     amount: toBigDecimal(order.amount),
     digest: order.digest,
-    isolated: order.isolated,
     expiration: Number(order.expiration),
     appendix,
     nonce: toBigDecimal(order.nonce),

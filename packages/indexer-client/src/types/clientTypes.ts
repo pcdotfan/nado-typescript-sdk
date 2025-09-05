@@ -349,7 +349,6 @@ export interface GetIndexerOrdersParams {
 export interface IndexerOrder {
   digest: string;
   subaccount: string;
-  isolated: boolean;
   productId: number;
   submissionIndex: string;
   amount: BigDecimal;

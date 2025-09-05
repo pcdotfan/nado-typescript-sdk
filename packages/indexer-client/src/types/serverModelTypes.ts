@@ -1,10 +1,10 @@
-import { EIP712OrderValues } from '@nadohq/shared';
 import {
   EngineServerPerpBalance,
   EngineServerPerpProduct,
   EngineServerSpotBalance,
   EngineServerSpotProduct,
 } from '@nadohq/engine-client';
+import { EIP712OrderValues } from '@nadohq/shared';
 import { IndexerEventType } from './IndexerEventType';
 import { NadoTx } from './NadoTx';
 
@@ -92,7 +92,6 @@ export interface IndexerServerTx {
 
 export interface IndexerServerOrder {
   digest: string;
-  isolated: boolean;
   subaccount: string;
   product_id: number;
   submission_idx: string;
