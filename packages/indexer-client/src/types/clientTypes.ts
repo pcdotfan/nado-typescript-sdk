@@ -10,7 +10,7 @@ import {
   SpotMarket,
   Subaccount,
 } from '@nadohq/shared';
-import { Hex } from 'viem';
+import { Address, Hex } from 'viem';
 import { CandlestickPeriod } from './CandlestickPeriod';
 import { IndexerEventType } from './IndexerEventType';
 import { IndexerLeaderboardRankType } from './IndexerLeaderboardType';
@@ -680,5 +680,5 @@ export interface GetIndexerSubaccountDDAParams {
 }
 
 export interface GetIndexerSubaccountDDAResponse {
-  address: string;
+  address: Address;
 }

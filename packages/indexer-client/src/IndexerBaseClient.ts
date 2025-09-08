@@ -4,6 +4,7 @@ import {
   getDefaultRecvTime,
   getNadoEIP712Values,
   getSignedTransactionRequest,
+  getValidatedAddress,
   getValidatedHex,
   mapValues,
   nowInSeconds,
@@ -801,7 +802,7 @@ export class IndexerBaseClient {
     });
 
     return {
-      address: baseResponse.v1_address,
+      address: getValidatedAddress(baseResponse.v1_address),
     };
   }
 
