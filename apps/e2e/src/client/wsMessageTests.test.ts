@@ -12,6 +12,7 @@ import test from 'node:test';
 import { debugPrint } from '../utils/debugPrint';
 import { runWithContext } from '../utils/runWithContext';
 import { RunContext } from '../utils/types';
+import { CandlestickPeriod } from '@nadohq/indexer-client';
 
 async function wsMessageTests(context: RunContext) {
   const walletClient = context.getWalletClient();
@@ -96,9 +97,7 @@ async function wsMessageTests(context: RunContext) {
 
   const wsTradeStream = nadoClient.ws.subscription.buildSubscriptionParams(
     'trade',
-    {
-      product_id: QUOTE_PRODUCT_ID,
-    },
+    { product_id: QUOTE_PRODUCT_ID },
   );
   const wsTradeSubscriptionReq =
     nadoClient.ws.subscription.buildSubscriptionMessage(
@@ -122,12 +121,75 @@ async function wsMessageTests(context: RunContext) {
       'unsubscribe',
       wsFillStream,
     );
-
   debugPrint('Fill unsubscribe WS request', wsFillUnsubscribeReq);
 
-  const wsListSubscriptionsReq =
-    nadoClient.ws.subscription.buildSubscriptionMessage(1, 'list', {});
+  // position_change (all products by omitting product_id)
+  const wsPositionChangeAllStream =
+    nadoClient.ws.subscription.buildSubscriptionParams('position_change', {
+      subaccount: subaccountToHex({
+        subaccountOwner: walletClientAddress,
+        subaccountName: 'default',
+      }),
+    });
+  const wsPositionChangeAllSubscriptionReq =
+    nadoClient.ws.subscription.buildSubscriptionMessage(
+      5,
+      'subscribe',
+      wsPositionChangeAllStream,
+    );
+  debugPrint(
+    'Position Change (all products) subscription WS request',
+    wsPositionChangeAllSubscriptionReq,
+  );
 
+  const wsLatestCandleStream =
+    nadoClient.ws.subscription.buildSubscriptionParams('latest_candlestick', {
+      product_id: 1,
+      granularity: CandlestickPeriod.HOUR,
+    });
+  const wsLatestCandleSubscriptionReq =
+    nadoClient.ws.subscription.buildSubscriptionMessage(
+      6,
+      'subscribe',
+      wsLatestCandleStream,
+    );
+  debugPrint(
+    'Latest Candlestick subscription WS request',
+    wsLatestCandleSubscriptionReq,
+  );
+
+  const wsLiquidationStream =
+    nadoClient.ws.subscription.buildSubscriptionParams('liquidation', {
+      product_id: 1,
+    });
+  const wsLiquidationSubscriptionReq =
+    nadoClient.ws.subscription.buildSubscriptionMessage(
+      7,
+      'subscribe',
+      wsLiquidationStream,
+    );
+  debugPrint(
+    'Liquidation subscription WS request',
+    wsLiquidationSubscriptionReq,
+  );
+
+  const wsFundingPaymentStream =
+    nadoClient.ws.subscription.buildSubscriptionParams('funding_payment', {
+      product_id: 1,
+    });
+  const wsFundingPaymentSubscriptionReq =
+    nadoClient.ws.subscription.buildSubscriptionMessage(
+      8,
+      'subscribe',
+      wsFundingPaymentStream,
+    );
+  debugPrint(
+    'Funding payment subscription WS request',
+    wsFundingPaymentSubscriptionReq,
+  );
+
+  const wsListSubscriptionsReq =
+    nadoClient.ws.subscription.buildSubscriptionMessage(9, 'list', {});
   debugPrint('List subscriptions WS request', wsListSubscriptionsReq);
 }
 
