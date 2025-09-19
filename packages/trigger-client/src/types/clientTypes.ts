@@ -4,7 +4,10 @@ import {
   OrderAppendix,
   Subaccount,
 } from '@nadohq/shared';
-import { EngineOrderParams } from '@nadohq/engine-client';
+import {
+  EngineOrderParams,
+  EngineServerExecuteResult,
+} from '@nadohq/engine-client';
 import { BigDecimal } from '@nadohq/shared';
 import { TriggerCriteria, TriggerOrderStatus } from './clientModelTypes';
 import {
@@ -88,4 +91,37 @@ export interface TriggerOrderInfo {
 
 export interface TriggerListOrdersResponse {
   orders: TriggerOrderInfo[];
+}
+
+export interface TriggerListTwapExecutionsParams {
+  digest: string;
+}
+
+export type TwapExecutionStatus =
+  | {
+      type: 'pending';
+    }
+  | {
+      type: 'executed';
+      executedTime: number;
+      executeResponse: EngineServerExecuteResult;
+    }
+  | {
+      type: 'failed';
+      error: string;
+    }
+  | {
+      type: 'cancelled';
+      reason: string;
+    };
+
+export interface TwapExecutionInfo {
+  executionId: number;
+  scheduledTime: number;
+  status: TwapExecutionStatus;
+  updatedAt: number;
+}
+
+export interface TriggerListTwapExecutionsResponse {
+  executions: TwapExecutionInfo[];
 }
