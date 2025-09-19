@@ -1,5 +1,5 @@
-import { EIP712ListTriggerOrdersValues, SignedTx } from '@nadohq/shared';
 import { EngineServerExecuteResult } from '@nadohq/engine-client';
+import { EIP712ListTriggerOrdersValues, SignedTx } from '@nadohq/shared';
 import { TriggerServerPlaceOrderParams } from './serverExecuteTypes';
 
 export type TriggerServerOrderStatus =
@@ -34,15 +34,25 @@ export type TriggerServerOrderStatus =
 
 export type TriggerServerTriggerTypeFilter = 'price_trigger' | 'time_trigger';
 
+export type TriggerServerStatusTypeFilter =
+  | 'cancelled'
+  | 'triggered'
+  | 'internal_error'
+  | 'triggering'
+  | 'waiting_price'
+  | 'waiting_dependency'
+  | 'twap_executing'
+  | 'twap_completed';
+
 export interface TriggerServerListTriggerOrdersParams
   extends SignedTx<EIP712ListTriggerOrdersValues> {
-  pending: boolean;
   // If not given, defaults to all products
   product_id?: number;
   max_update_time?: number;
   digests?: string[];
   limit?: number;
   trigger_types?: TriggerServerTriggerTypeFilter[];
+  status_types?: TriggerServerStatusTypeFilter[];
   reduce_only?: boolean;
 }
 

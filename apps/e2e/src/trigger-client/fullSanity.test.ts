@@ -1,4 +1,7 @@
+import { EngineClient, EngineOrderParams } from '@nadohq/engine-client';
 import {
+  addDecimals,
+  BigDecimal,
   depositCollateral,
   getOrderDigest,
   getOrderNonce,
@@ -6,15 +9,14 @@ import {
   MOCK_ERC20_ABI,
   NADO_ABIS,
   packOrderAppendix,
-} from '@nadohq/shared';
-import { EngineClient, EngineOrderParams } from '@nadohq/engine-client';
-import { TriggerClient, TriggerPlaceOrderParams } from '@nadohq/trigger-client';
-import {
-  addDecimals,
-  BigDecimal,
   toBigDecimal,
   toBigInt,
 } from '@nadohq/shared';
+import {
+  TriggerClient,
+  TriggerPlaceOrderParams,
+  TriggerServerStatusTypeFilter,
+} from '@nadohq/trigger-client';
 import test from 'node:test';
 import { getContract } from 'viem';
 import { debugPrint } from '../utils/debugPrint';
@@ -22,6 +24,13 @@ import { getExpiration } from '../utils/getExpiration';
 import { runWithContext } from '../utils/runWithContext';
 import { RunContext } from '../utils/types';
 import { waitForTransaction } from '../utils/waitForTransaction';
+
+const PENDING_TRIGGER_STATUS_TYPES: TriggerServerStatusTypeFilter = [
+  'triggering',
+  'waiting_price',
+  'waiting_dependency',
+  'twap_executing',
+];
 
 async function fullSanity(context: RunContext) {
   const walletClient = context.getWalletClient();
@@ -316,7 +325,7 @@ async function fullSanity(context: RunContext) {
 
   const reduceOnlyOrdersResult = await client.listOrders({
     chainId,
-    pending: true,
+    statusTypes: PENDING_TRIGGER_STATUS_TYPES,
     subaccountName,
     subaccountOwner,
     verifyingAddr: endpointAddr,
@@ -326,7 +335,7 @@ async function fullSanity(context: RunContext) {
 
   const twapOrdersResult = await client.listOrders({
     chainId,
-    pending: true,
+    statusTypes: PENDING_TRIGGER_STATUS_TYPES,
     subaccountName,
     subaccountOwner,
     verifyingAddr: endpointAddr,
@@ -336,7 +345,7 @@ async function fullSanity(context: RunContext) {
 
   const pendingListOrdersResult = await client.listOrders({
     chainId,
-    pending: true,
+    statusTypes: PENDING_TRIGGER_STATUS_TYPES,
     subaccountName,
     subaccountOwner,
     verifyingAddr: endpointAddr,
@@ -345,7 +354,7 @@ async function fullSanity(context: RunContext) {
 
   const pendingListOrdersForProductResult = await client.listOrders({
     chainId,
-    pending: true,
+    statusTypes: PENDING_TRIGGER_STATUS_TYPES,
     subaccountName,
     subaccountOwner,
     verifyingAddr: endpointAddr,
@@ -382,7 +391,7 @@ async function fullSanity(context: RunContext) {
 
   const nonPendingListOrdersResult = await client.listOrders({
     chainId,
-    pending: false,
+    statusTypes: PENDING_TRIGGER_STATUS_TYPES,
     subaccountName,
     subaccountOwner,
     verifyingAddr: endpointAddr,
@@ -395,7 +404,6 @@ async function fullSanity(context: RunContext) {
     verifyingAddr: endpointAddr,
     subaccountName,
     subaccountOwner,
-    pending: false,
     digests: [shortStopDigest, longStopDigest, shortStopMidBookDigest],
   });
 

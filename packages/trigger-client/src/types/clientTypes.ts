@@ -1,17 +1,18 @@
 import {
+  EngineOrderParams,
+  EngineServerExecuteResult,
+} from '@nadohq/engine-client';
+import {
+  BigDecimal,
   EIP712CancelOrdersParams,
   EIP712CancelProductOrdersParams,
   OrderAppendix,
   Subaccount,
 } from '@nadohq/shared';
-import {
-  EngineOrderParams,
-  EngineServerExecuteResult,
-} from '@nadohq/engine-client';
-import { BigDecimal } from '@nadohq/shared';
 import { TriggerCriteria, TriggerOrderStatus } from './clientModelTypes';
 import {
   TriggerServerOrder,
+  TriggerServerStatusTypeFilter,
   TriggerServerTriggerTypeFilter,
 } from './serverQueryTypes';
 
@@ -58,13 +59,13 @@ export interface TriggerListOrdersParams extends Subaccount, SignatureParams {
   recvTime?: BigDecimal;
   // If not given, defaults to all products
   productId?: number;
-  // Pending trigger orders only, ignores cancelled & triggered orders
-  pending: boolean;
   // In seconds
   maxUpdateTimeInclusive?: number;
   // When provided, the associated trigger orders are returned regardless of other filters
   digests?: string[];
   limit?: number;
+  // Filter by status types
+  statusTypes?: TriggerServerStatusTypeFilter[];
   // Filter by trigger types
   triggerTypes?: TriggerServerTriggerTypeFilter[];
   // Filter by reduce-only orders
