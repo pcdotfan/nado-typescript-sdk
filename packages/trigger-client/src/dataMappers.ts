@@ -83,7 +83,7 @@ function mapTimeTriggerCriteria(
   criteria: TimeTriggerCriteria,
 ): TriggerServerTimeTriggerCriteria {
   return {
-    interval: toIntegerString(criteria.interval),
+    interval: Number(criteria.interval),
     amounts: criteria.amounts?.map((amount) => toIntegerString(amount)),
   };
 }

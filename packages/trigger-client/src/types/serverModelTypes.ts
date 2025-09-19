@@ -38,7 +38,7 @@ export interface TriggerServerTimeTriggerCriteria {
   /**
    * Trigger interval in seconds
    */
-  interval: string;
+  interval: number;
   /**
    * By default, trigger service will split up orders as per total amount / interval
    * If you want to specify the amounts for each interval, you can provide them here.
