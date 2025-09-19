@@ -25,7 +25,7 @@ import { runWithContext } from '../utils/runWithContext';
 import { RunContext } from '../utils/types';
 import { waitForTransaction } from '../utils/waitForTransaction';
 
-const PENDING_TRIGGER_STATUS_TYPES: TriggerServerStatusTypeFilter = [
+const PENDING_TRIGGER_STATUS_TYPES: TriggerServerStatusTypeFilter[] = [
   'triggering',
   'waiting_price',
   'waiting_dependency',
