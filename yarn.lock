@@ -1261,47 +1261,47 @@
     yargs-parser "21.1.1"
 
 "@nadohq/client@latest":
-  version "0.1.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/@nadohq/client/-/client-0.1.0-alpha.9.tgz#c29173423e7c5dc0c314c93ff57488948bf4beb8"
-  integrity sha512-Z5U6u8sKZ3Vn3IcFzumAAHgd0zUN5J7vhn9kyNwv/OVQq+GGTTALXIdVsviXgGzz+NnkaHBgCnRj1WYYfVMTPQ==
+  version "0.1.0-alpha.10"
+  resolved "https://registry.yarnpkg.com/@nadohq/client/-/client-0.1.0-alpha.10.tgz#6fe6c478d2513601c64bf3033c5d5835a0bb8221"
+  integrity sha512-hgRNiL7wRT3bfP3xeO+Rf8jp02rqR3Sktems94AQ82uhYrr1aOxOllZRJY6v6+zTL0jhIvQ76uW3yuoVl94dOA==
   dependencies:
-    "@nadohq/engine-client" "^0.1.0-alpha.9"
-    "@nadohq/indexer-client" "^0.1.0-alpha.9"
-    "@nadohq/shared" "^0.1.0-alpha.9"
-    "@nadohq/trigger-client" "^0.1.0-alpha.9"
+    "@nadohq/engine-client" "^0.1.0-alpha.10"
+    "@nadohq/indexer-client" "^0.1.0-alpha.10"
+    "@nadohq/shared" "^0.1.0-alpha.10"
+    "@nadohq/trigger-client" "^0.1.0-alpha.10"
     ts-mixer "*"
 
 "@nadohq/engine-client@latest":
-  version "0.1.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/@nadohq/engine-client/-/engine-client-0.1.0-alpha.9.tgz#e8076003420e4e9581bd656a82ccbb12f8084506"
-  integrity sha512-YZB/evrbVM0omnpIAoj59cVc96FoIhzvLIi898aUl1UaaD5s6AGtbCcVZS24pk9yvCcf9NyxxgYWke3ZoTAL3Q==
+  version "0.1.0-alpha.10"
+  resolved "https://registry.yarnpkg.com/@nadohq/engine-client/-/engine-client-0.1.0-alpha.10.tgz#4021b9729a96a5666ba1ebedda15180d900ede6f"
+  integrity sha512-SKqlJvAiGJNii7aPG+PhdvGumgeXtspK9BKGtK2I2ctDaIesqMjl+h7vx9ZI3WHJX4iIOIZ8TK9lrkkBBy0fbA==
   dependencies:
-    "@nadohq/shared" "^0.1.0-alpha.9"
+    "@nadohq/shared" "^0.1.0-alpha.10"
     axios "*"
     ts-mixer "*"
 
 "@nadohq/indexer-client@latest":
-  version "0.1.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/@nadohq/indexer-client/-/indexer-client-0.1.0-alpha.9.tgz#7a1dea306ed272311168bf91cb3e06e3bdc797ed"
-  integrity sha512-fjReJOvK0x5Hx/Phpg7mKJc6JUqnFZkbjN+sOaH1Im8SLvJcxmGePhe9mrjdYdM7Ts79NzebNAkgUHlSOdhfQw==
+  version "0.1.0-alpha.10"
+  resolved "https://registry.yarnpkg.com/@nadohq/indexer-client/-/indexer-client-0.1.0-alpha.10.tgz#13c66758a7f958e4766c227f3c5c8de5b8bb10d7"
+  integrity sha512-hUaGhjhdgn0RBtWwzB2mUqRLRFJ2ZhD7ei2SUWBayZ81732BB882BZ80oNYLlm+nfWxGW5LIanPU1v920b/Gog==
   dependencies:
-    "@nadohq/engine-client" "^0.1.0-alpha.9"
-    "@nadohq/shared" "^0.1.0-alpha.9"
+    "@nadohq/engine-client" "^0.1.0-alpha.10"
+    "@nadohq/shared" "^0.1.0-alpha.10"
     axios "*"
     ts-mixer "*"
 
 "@nadohq/shared@latest":
-  version "0.1.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/@nadohq/shared/-/shared-0.1.0-alpha.9.tgz#890d7d3594992ed585aa000423c4d4b6b81cafd7"
-  integrity sha512-9UjlHcEn1sWUc9xRg1v8JPu6ugPw5KzWR6QDtkKmsSW9c7kkN97Z698UYBF97mH7VIQxeAk2ve6y0rIlKolNCg==
+  version "0.1.0-alpha.10"
+  resolved "https://registry.yarnpkg.com/@nadohq/shared/-/shared-0.1.0-alpha.10.tgz#c6752a7e78f5dd972608ece11a84282b235020f8"
+  integrity sha512-4aTTcHw8inE8tRRccCsLn6a9ndhI7vq81BA1c6/6Nch4zuUtar9sjPFKTC5YmC4qgI5Z0W2cOUAJA12z/x3FIQ==
 
 "@nadohq/trigger-client@latest":
-  version "0.1.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/@nadohq/trigger-client/-/trigger-client-0.1.0-alpha.9.tgz#69c8f2aec5f48573d9571d01c50cd37b2e2fa96c"
-  integrity sha512-ItNCEGr14p11yqdBlqbK+RMgLumFDD5mDha5Y+R03DwpJf25og8fbSzWNXbAHpTeoQR3wZzOlT8+FmnsKseO1A==
+  version "0.1.0-alpha.10"
+  resolved "https://registry.yarnpkg.com/@nadohq/trigger-client/-/trigger-client-0.1.0-alpha.10.tgz#28389a5a6f725441e27143c07ab7cf61429c539c"
+  integrity sha512-6s0U7His//l6WmuXgPAwq+K9szJixlnoVR3QDxNuhsyuaFabWS8pJu4/Sgk6zIIPPObVcpF4np0HvZioK+V7YQ==
   dependencies:
-    "@nadohq/engine-client" "^0.1.0-alpha.9"
-    "@nadohq/shared" "^0.1.0-alpha.9"
+    "@nadohq/engine-client" "^0.1.0-alpha.10"
+    "@nadohq/shared" "^0.1.0-alpha.10"
     axios "*"
     ts-mixer "*"
 
