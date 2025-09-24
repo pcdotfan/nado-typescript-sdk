@@ -358,7 +358,7 @@ async function fullSanity(context: RunContext) {
     subaccountName,
     subaccountOwner,
     verifyingAddr: endpointAddr,
-    productId: ethProductId,
+    productIds: [ethProductId],
   });
 
   debugPrint(
