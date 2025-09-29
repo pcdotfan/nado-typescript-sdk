@@ -1,11 +1,16 @@
 import { EngineClient } from '@nadohq/engine-client';
-import { NADO_ABIS, NLP_PRODUCT_ID } from '@nadohq/shared';
-import { addDecimals, removeDecimals, BigDecimals } from '@nadohq/shared';
-import { RunContext } from '../utils/types';
-import { getContract } from 'viem';
-import { runWithContext } from '../utils/runWithContext';
+import {
+  addDecimals,
+  BigDecimals,
+  NADO_ABIS,
+  NLP_PRODUCT_ID,
+  removeDecimals,
+} from '@nadohq/shared';
 import test from 'node:test';
+import { getContract } from 'viem';
 import { debugPrint } from '../utils/debugPrint';
+import { runWithContext } from '../utils/runWithContext';
+import { RunContext } from '../utils/types';
 
 async function nlpTests(context: RunContext) {
   const walletClient = context.getWalletClient();
@@ -50,6 +55,12 @@ async function nlpTests(context: RunContext) {
       (bal) => bal.productId === NLP_PRODUCT_ID,
     )?.amount ?? BigDecimals.ZERO;
   debugPrint('NLP Balance', removeDecimals(nlpBalanceAmount));
+
+  const maxBurnNlpAmount = await client.getMaxBurnNlpAmount({
+    subaccountOwner: walletClientAddress,
+    subaccountName: 'default',
+  });
+  debugPrint('Max burn NLP amount', maxBurnNlpAmount);
 
   const burnNlpResult = await client.burnNlp({
     subaccountOwner: walletClientAddress,

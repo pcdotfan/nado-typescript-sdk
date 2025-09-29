@@ -101,6 +101,10 @@ export interface EngineServerMaxMintNlpQueryParams {
   spot_leverage: string | null;
 }
 
+export interface EngineServerMaxBurnNlpQueryParams {
+  sender: string;
+}
+
 export interface EngineServerQueryRequestByType {
   all_products: Record<string, never>;
   contracts: Record<string, never>;
@@ -113,6 +117,7 @@ export interface EngineServerQueryRequestByType {
   market_liquidity: EngineServerMarketLiquidityQueryParams;
   market_price: EngineServerMarketPriceQueryParams;
   market_prices: EngineServerMarketPricesQueryParams;
+  max_nlp_burnable: EngineServerMaxBurnNlpQueryParams;
   max_nlp_mintable: EngineServerMaxMintNlpQueryParams;
   max_order_size: EngineServerMaxOrderSizeQueryParams;
   max_withdrawable: EngineServerMaxWithdrawableQueryParams;
@@ -318,6 +323,10 @@ export interface EngineServerEdgeAllProductsResponse {
   edge_all_products: Record<number, EngineServerAllProductsResponse>;
 }
 
+export interface EngineServerMaxBurnNlpResponse {
+  max_nlp_amount: string;
+}
+
 export interface EngineServerMaxMintNlpResponse {
   max_quote_amount: string;
 }
@@ -334,6 +343,7 @@ export interface EngineServerQueryResponseByType {
   market_liquidity: EngineServerMarketLiquidityResponse;
   market_price: EngineServerMarketPriceResponse;
   market_prices: EngineServerMarketPricesResponse;
+  max_nlp_burnable: EngineServerMaxBurnNlpResponse;
   max_nlp_mintable: EngineServerMaxMintNlpResponse;
   max_order_size: EngineServerMaxOrderSizeResponse;
   max_withdrawable: EngineServerMaxWithdrawableResponse;

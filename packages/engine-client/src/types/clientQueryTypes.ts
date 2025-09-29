@@ -252,3 +252,7 @@ export interface GetEngineMaxMintNlpAmountParams extends Subaccount {
 }
 
 export type GetEngineMaxMintNlpAmountResponse = BigDecimal;
+
+export type GetEngineMaxBurnNlpAmountParams = Subaccount;
+
+export type GetEngineMaxBurnNlpAmountResponse = BigDecimal;

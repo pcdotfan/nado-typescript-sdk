@@ -30,6 +30,8 @@ import {
   GetEngineMarketPriceResponse,
   GetEngineMarketPricesParams,
   GetEngineMarketPricesResponse,
+  GetEngineMaxBurnNlpAmountParams,
+  GetEngineMaxBurnNlpAmountResponse,
   GetEngineMaxMintNlpAmountParams,
   GetEngineMaxMintNlpAmountResponse,
   GetEngineMaxOrderSizeParams,
@@ -491,6 +493,24 @@ export class EngineQueryClient extends EngineBaseClient {
     });
 
     return toBigDecimal(baseResponse.max_quote_amount);
+  }
+
+  /**
+   * Retrieves the max amount of NLP that can be burned.
+   *
+   * @param params
+   */
+  async getMaxBurnNlpAmount(
+    params: GetEngineMaxBurnNlpAmountParams,
+  ): Promise<GetEngineMaxBurnNlpAmountResponse> {
+    const baseResponse = await this.query('max_nlp_burnable', {
+      sender: subaccountToHex({
+        subaccountOwner: params.subaccountOwner,
+        subaccountName: params.subaccountName,
+      }),
+    });
+
+    return toBigDecimal(baseResponse.max_nlp_amount);
   }
 
   /**
