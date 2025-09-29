@@ -1260,7 +1260,7 @@
     yargs "17.7.2"
     yargs-parser "21.1.1"
 
-"@nadohq/client@latest":
+"@nadohq/client@0.1.0-alpha.11":
   version "0.1.0-alpha.11"
   resolved "https://registry.yarnpkg.com/@nadohq/client/-/client-0.1.0-alpha.11.tgz#8938466f5db7c8a4ca041bcf1569315724b3353a"
   integrity sha512-aqJrqQLYmeRjX5MlKFeYK+VRNrPZAQ5sFXchYomlaaq13uA/mKQ15/zBH3W3qByC0WRYrwnN6aUC92zlcnysuw==
@@ -1271,7 +1271,7 @@
     "@nadohq/trigger-client" "^0.1.0-alpha.11"
     ts-mixer "*"
 
-"@nadohq/engine-client@latest":
+"@nadohq/engine-client@0.1.0-alpha.11":
   version "0.1.0-alpha.11"
   resolved "https://registry.yarnpkg.com/@nadohq/engine-client/-/engine-client-0.1.0-alpha.11.tgz#4f27963a37db5cde2d05af69121d066a12dad76c"
   integrity sha512-DfBfIxWJq8j/yMEMeRNLuwhokK4UACEa8P/DPXKrpN83Hgk7GF+qD1NcPQouH1VieGXaK/hmCY8ccHyeVwhVfg==
@@ -1280,7 +1280,7 @@
     axios "*"
     ts-mixer "*"
 
-"@nadohq/indexer-client@latest":
+"@nadohq/indexer-client@0.1.0-alpha.11":
   version "0.1.0-alpha.11"
   resolved "https://registry.yarnpkg.com/@nadohq/indexer-client/-/indexer-client-0.1.0-alpha.11.tgz#0dbd40c0f919bf6db9ed0127cd76ec25522082db"
   integrity sha512-tFdB7u9OcI4CuweEAwwgHM1W+AqoTbCgymNe9Kmc5XWEBiGF79LXdHuYQazeWS1LpGMLKy31g1K4k+1uQI0Q8Q==
@@ -1290,12 +1290,12 @@
     axios "*"
     ts-mixer "*"
 
-"@nadohq/shared@latest":
+"@nadohq/shared@0.1.0-alpha.11":
   version "0.1.0-alpha.11"
   resolved "https://registry.yarnpkg.com/@nadohq/shared/-/shared-0.1.0-alpha.11.tgz#be665d7d24f8e27ed9ec76aac841f3482796eefe"
   integrity sha512-Zrlts6Ovb4nr0+pWYHQLBg7bBs9Tv1e3jBJgYARBmqzdh5fhk8LBYYyxHSxG0bmFY5oDZAaCUtoZxPTUwcbP/A==
 
-"@nadohq/trigger-client@latest":
+"@nadohq/trigger-client@0.1.0-alpha.11":
   version "0.1.0-alpha.11"
   resolved "https://registry.yarnpkg.com/@nadohq/trigger-client/-/trigger-client-0.1.0-alpha.11.tgz#e23a75f24bf95f3d5204507480ecb1d7eb0c76f7"
   integrity sha512-Uq7edhRny9uaDLXx5+auCj+sLxVFjOarR1FOKbULZRUpu0tKHAyhtH85saZypllPOclnvstzT32BGe7zFTy7eg==
