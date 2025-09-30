@@ -1,6 +1,6 @@
 {
   "name": "@nadohq/client",
-  "version": "0.1.0-alpha.13",
+  "version": "0.1.0-alpha.14",
   "type": "module",
   "sideEffects": false,
   "description": "> TODO: description",
@@ -37,10 +37,10 @@
     }
   },
   "dependencies": {
-    "@nadohq/engine-client": "^0.1.0-alpha.13",
-    "@nadohq/indexer-client": "^0.1.0-alpha.13",
-    "@nadohq/shared": "^0.1.0-alpha.13",
-    "@nadohq/trigger-client": "^0.1.0-alpha.13",
+    "@nadohq/engine-client": "^0.1.0-alpha.14",
+    "@nadohq/indexer-client": "^0.1.0-alpha.14",
+    "@nadohq/shared": "^0.1.0-alpha.14",
+    "@nadohq/trigger-client": "^0.1.0-alpha.14",
     "ts-mixer": "*"
   },
   "peerDependencies": {
