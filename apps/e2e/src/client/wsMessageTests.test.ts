@@ -1,18 +1,19 @@
 import { createNadoClient, NadoClient, PlaceOrderParams } from '@nadohq/client';
+import { CandlestickPeriod } from '@nadohq/indexer-client';
 import {
+  addDecimals,
   getOrderDigest,
   getOrderNonce,
   getOrderVerifyingAddress,
+  nowInSeconds,
   packOrderAppendix,
   QUOTE_PRODUCT_ID,
   subaccountToHex,
 } from '@nadohq/shared';
-import { addDecimals, nowInSeconds } from '@nadohq/shared';
 import test from 'node:test';
 import { debugPrint } from '../utils/debugPrint';
 import { runWithContext } from '../utils/runWithContext';
 import { RunContext } from '../utils/types';
-import { CandlestickPeriod } from '@nadohq/indexer-client';
 
 async function wsMessageTests(context: RunContext) {
   const walletClient = context.getWalletClient();

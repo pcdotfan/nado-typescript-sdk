@@ -1,10 +1,10 @@
-import { Subaccount } from '@nadohq/shared';
 import { IndexerClient } from '@nadohq/indexer-client';
-import { getServerError } from '../utils/getServerError';
-import { RunContext } from '../utils/types';
-import { runWithContext } from '../utils/runWithContext';
+import { Subaccount } from '@nadohq/shared';
 import test from 'node:test';
 import { debugPrint } from '../utils/debugPrint';
+import { getServerError } from '../utils/getServerError';
+import { runWithContext } from '../utils/runWithContext';
+import { RunContext } from '../utils/types';
 
 async function leaderboardTests(context: RunContext) {
   const walletClient = context.getWalletClient();

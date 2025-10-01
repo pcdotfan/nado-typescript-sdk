@@ -1,9 +1,9 @@
 import { IndexerClient } from '@nadohq/indexer-client';
-import { runWithContext } from '../utils/runWithContext';
-import { RunContext } from '../utils/types';
 import { nowInSeconds, TimeInSeconds } from '@nadohq/shared';
 import test from 'node:test';
 import { debugPrint } from '../utils/debugPrint';
+import { runWithContext } from '../utils/runWithContext';
+import { RunContext } from '../utils/types';
 
 async function nlpQueriesTests(context: RunContext) {
   const walletClient = context.getWalletClient();

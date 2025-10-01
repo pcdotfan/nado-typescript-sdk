@@ -1,6 +1,5 @@
+import { ChainEnv, getValidatedHex } from '@nadohq/shared';
 import 'dotenv/config';
-import { ChainEnv } from '@nadohq/shared';
-import { getValidatedHex } from '@nadohq/shared';
 import { Env } from './types';
 
 const chainEnv: ChainEnv = (process.env.CHAIN_ENV as ChainEnv) ?? 'inkTestnet';
