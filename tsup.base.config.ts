@@ -1,6 +1,6 @@
-import { defineConfig } from 'tsup';
-import { esbuildPluginFilePathExtensions } from 'esbuild-plugin-file-path-extensions';
 import { copy } from 'esbuild-plugin-copy';
+import { esbuildPluginFilePathExtensions } from 'esbuild-plugin-file-path-extensions';
+import { defineConfig } from 'tsup';
 
 export default defineConfig([
   {

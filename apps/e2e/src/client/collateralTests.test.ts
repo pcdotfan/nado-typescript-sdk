@@ -1,6 +1,10 @@
 import { createNadoClient, NadoClient } from '@nadohq/client';
-import { getNadoEIP712Values, QUOTE_PRODUCT_ID } from '@nadohq/shared';
-import { addDecimals, toBigInt } from '@nadohq/shared';
+import {
+  addDecimals,
+  getNadoEIP712Values,
+  QUOTE_PRODUCT_ID,
+  toBigInt,
+} from '@nadohq/shared';
 import test from 'node:test';
 import { encodeAbiParameters, encodePacked, parseAbiParameters } from 'viem';
 import { debugPrint } from '../utils/debugPrint';
