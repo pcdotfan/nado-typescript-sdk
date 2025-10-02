@@ -89,6 +89,7 @@ export interface EngineServerMaxOrderSizeQueryParams {
   // If not given, engine defaults to false. If true, the max order size will be capped to the subaccount's current position size;
   // If no position exists, it will return 0.
   reduce_only: string | null;
+  isolated: string | null;
 }
 
 export interface EngineServerLinkedSignerParams {

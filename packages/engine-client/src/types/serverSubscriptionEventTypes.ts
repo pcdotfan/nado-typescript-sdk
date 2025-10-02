@@ -105,6 +105,10 @@ export interface EngineServerSubscriptionPositionChangeEvent
   /** Zero for everything except perps */
   v_quote_amount: string;
   reason: PositionChangeReason;
+  /**
+   * True if the position change was for an isolated position
+   */
+  isolated: boolean;
 }
 
 /**

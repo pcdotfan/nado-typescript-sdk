@@ -216,6 +216,7 @@ export interface GetEngineMaxOrderSizeParams extends Subaccount {
   // If not given, engine defaults to false. If true, the max order size will be capped to the subaccount's current position size;
   // If no position exists, it will return 0.
   reduceOnly?: boolean;
+  isolated?: boolean;
 }
 
 export type GetEngineMaxOrderSizeResponse = BigDecimal;

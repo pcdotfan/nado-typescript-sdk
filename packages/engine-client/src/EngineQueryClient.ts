@@ -447,9 +447,11 @@ export class EngineQueryClient extends EngineBaseClient {
         subaccountOwner: params.subaccountOwner,
         subaccountName: params.subaccountName,
       }),
+      // Backend expects string variants of booleans
       spot_leverage:
         params.spotLeverage != null ? String(params.spotLeverage) : null,
       reduce_only: params.reduceOnly != null ? String(params.reduceOnly) : null,
+      isolated: params.isolated != null ? String(params.isolated) : null,
     });
 
     return toBigDecimal(baseResponse.max_order_size);
