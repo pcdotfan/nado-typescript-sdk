@@ -452,6 +452,11 @@ export class EngineQueryClient extends EngineBaseClient {
         params.spotLeverage != null ? String(params.spotLeverage) : null,
       reduce_only: params.reduceOnly != null ? String(params.reduceOnly) : null,
       isolated: params.isolated != null ? String(params.isolated) : null,
+      borrow_margin:
+        // This field is only relevant for isolated orders
+        params.isolated && params.isoBorrowMargin != null
+          ? String(params.isoBorrowMargin)
+          : null,
     });
 
     return toBigDecimal(baseResponse.max_order_size);

@@ -217,6 +217,9 @@ export interface GetEngineMaxOrderSizeParams extends Subaccount {
   // If no position exists, it will return 0.
   reduceOnly?: boolean;
   isolated?: boolean;
+  // If not given, engine defaults to true (do not borrow margin for isolated orders)
+  // Max order size query for `isolated` includes available transfer from the cross subaccount
+  isoBorrowMargin?: boolean;
 }
 
 export type GetEngineMaxOrderSizeResponse = BigDecimal;

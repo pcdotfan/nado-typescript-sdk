@@ -90,6 +90,9 @@ export interface EngineServerMaxOrderSizeQueryParams {
   // If no position exists, it will return 0.
   reduce_only: string | null;
   isolated: string | null;
+  // For isolated, max order size includes available collateral to transfer from parent cross subaccount
+  // If not given, engine defaults to true (borrow enabled)
+  borrow_margin: string | null;
 }
 
 export interface EngineServerLinkedSignerParams {
