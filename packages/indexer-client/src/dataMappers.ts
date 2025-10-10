@@ -150,6 +150,7 @@ export function mapIndexerEvent(event: IndexerServerEvent): IndexerEvent {
       netFundingUnrealized: toBigDecimal(event.net_funding_unrealized),
       netInterestCumulative: toBigDecimal(event.net_interest_cumulative),
       netInterestUnrealized: toBigDecimal(event.net_interest_unrealized),
+      quoteVolumeCumulative: toBigDecimal(event.quote_volume_cumulative),
     },
   };
 }

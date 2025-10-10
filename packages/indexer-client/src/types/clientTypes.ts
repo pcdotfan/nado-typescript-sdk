@@ -54,6 +54,7 @@ export interface IndexerBalanceTrackedVars {
   netFundingCumulative: BigDecimal;
   netEntryUnrealized: BigDecimal;
   netEntryCumulative: BigDecimal;
+  quoteVolumeCumulative: BigDecimal;
 }
 
 export interface IndexerEvent<

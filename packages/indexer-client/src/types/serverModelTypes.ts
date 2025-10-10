@@ -78,6 +78,10 @@ export interface IndexerServerEvent {
   net_funding_cumulative: string;
   net_entry_unrealized: string;
   net_entry_cumulative: string;
+  /**
+   * Total traded volume in terms of the primary quote (i.e in terms of USDT) for this product
+   */
+  quote_volume_cumulative: string;
 }
 
 export interface IndexerServerTx {

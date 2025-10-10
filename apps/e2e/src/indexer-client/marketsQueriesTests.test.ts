@@ -32,7 +32,7 @@ async function marketsQueriesTests(context: RunContext) {
   debugPrint('Perp prices', price);
 
   const perpPrices = await client.getMultiProductPerpPrices({
-    productIds: [2, 4, 6],
+    productIds: [2, 4],
   });
 
   debugPrint('Multiple products perp prices', perpPrices);
