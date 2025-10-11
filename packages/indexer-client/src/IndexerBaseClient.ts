@@ -37,6 +37,7 @@ import {
   mapIndexerPerpPrices,
   mapIndexerProductPayment,
   mapIndexerServerProduct,
+  mapIndexerV2Ticker,
   mapSnapshotsIntervalToServerParams,
 } from './dataMappers';
 import {
@@ -94,6 +95,8 @@ import {
   GetIndexerReferralCodeResponse,
   GetIndexerSubaccountDDAParams,
   GetIndexerSubaccountDDAResponse,
+  GetIndexerV2TickersParams,
+  GetIndexerV2TickersResponse,
   IndexerEventWithTx,
   IndexerMatchEvent,
   IndexerOraclePrice,
@@ -101,6 +104,7 @@ import {
   IndexerServerQueryRequestByType,
   IndexerServerQueryRequestType,
   IndexerServerQueryResponseByType,
+  IndexerServerV2TickersResponse,
   IndexerSnapshotBalance,
   IndexerSubaccountSnapshot,
   ListIndexerSubaccountsParams,
@@ -822,6 +826,24 @@ export class IndexerBaseClient {
         ? toBigDecimal(baseResponse.txs_per_second)
         : null,
     };
+  }
+
+  /**
+   * Get tickers from the v2 indexer endpoint
+   * @param params
+   */
+  async getV2Tickers(
+    params: GetIndexerV2TickersParams,
+  ): Promise<GetIndexerV2TickersResponse> {
+    const response =
+      await this.axiosInstance.get<IndexerServerV2TickersResponse>(
+        `${this.v2Url}/tickers`,
+        { params },
+      );
+
+    this.checkResponseStatus(response);
+
+    return mapValues(response.data, mapIndexerV2Ticker);
   }
 
   protected async query<TRequestType extends IndexerServerQueryRequestType>(
