@@ -1,6 +1,6 @@
 {
   "name": "@nadohq/engine-client",
-  "version": "0.1.0-alpha.17",
+  "version": "0.1.0-alpha.18",
   "type": "module",
   "sideEffects": false,
   "description": "> TODO: description",
@@ -37,7 +37,7 @@
     }
   },
   "dependencies": {
-    "@nadohq/shared": "^0.1.0-alpha.17",
+    "@nadohq/shared": "^0.1.0-alpha.18",
     "axios": "*",
     "ts-mixer": "*"
   },
