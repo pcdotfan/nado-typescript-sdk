@@ -130,6 +130,35 @@ async function orderTests(context: RunContext) {
   });
 
   debugPrint('Cancel and place order result', cancelAndPlaceResult);
+
+  // Place multiple orders
+  console.log('Placing multiple orders');
+  const placeOrdersResult = await nadoClient.market.placeOrders([
+    {
+      order: {
+        ...orderParams,
+        price: shortLimitPrice,
+        amount: addDecimals(-1),
+        appendix: packOrderAppendix({
+          orderExecutionType: 'post_only',
+        }),
+      },
+      productId: spotOrderProductId,
+    },
+    {
+      order: {
+        ...orderParams,
+        price: shortLimitPrice,
+        amount: addDecimals(-2),
+        appendix: packOrderAppendix({
+          orderExecutionType: 'post_only',
+        }),
+      },
+      productId: spotOrderProductId,
+    },
+  ]);
+
+  debugPrint('Place orders result', placeOrdersResult);
 }
 
 void test('[client]: Running order tests', () => runWithContext(orderTests));
