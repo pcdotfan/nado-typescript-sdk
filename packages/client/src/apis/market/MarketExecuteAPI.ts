@@ -1,3 +1,4 @@
+import { EngineServerExecuteSuccessResult } from '@nadohq/engine-client';
 import { getOrderVerifyingAddress } from '@nadohq/shared';
 import { BaseNadoAPI } from '../base';
 import {
@@ -7,6 +8,7 @@ import {
   CancelTriggerOrdersParams,
   CancelTriggerProductOrdersParams,
   PlaceOrderParams,
+  PlaceOrdersParams,
   PlaceTriggerOrderParams,
 } from './types';
 
@@ -30,6 +32,32 @@ export class MarketExecuteAPI extends BaseNadoAPI {
       spotLeverage: params.spotLeverage,
       nonce,
     });
+  }
+
+  /**
+   * Places multiple orders through the engine
+   * @param params
+   */
+  async placeOrders(
+    params: PlaceOrdersParams,
+  ): Promise<EngineServerExecuteSuccessResult<'place_orders'>> {
+    return this.context.engineClient.placeOrders(
+      params.map((orderParams) => {
+        const { id, productId, order, nonce, spotLeverage } = orderParams;
+        return {
+          id,
+          order: {
+            ...order,
+            subaccountOwner: this.getSubaccountOwnerIfNeeded(order),
+          },
+          chainId: this.getWalletClientChainIdIfNeeded(orderParams),
+          verifyingAddr: getOrderVerifyingAddress(productId),
+          productId,
+          spotLeverage,
+          nonce,
+        };
+      }),
+    );
   }
 
   /**

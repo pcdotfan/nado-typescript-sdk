@@ -24,6 +24,8 @@ type ClientOrderParams<T extends { order: EngineOrderParams }> = Omit<
 
 export type PlaceOrderParams = ClientOrderParams<EnginePlaceOrderParams>;
 
+export type PlaceOrdersParams = PlaceOrderParams[];
+
 export type CancelOrdersParams = OptionalSignatureParams<
   OptionalSubaccountOwner<EngineCancelOrdersParams>
 >;
