@@ -19,6 +19,7 @@ import {
   EngineServerIsolatedPositionsResponse,
   EngineServerMarketPrice,
   EngineServerNlpLockedBalancesResponse,
+  EngineServerNlpPoolInfoResponse,
   EngineServerOrderResponse,
   EngineServerPerpProduct,
   EngineServerPriceTickLiquidity,
@@ -30,6 +31,7 @@ import {
   EngineSymbolsResponse,
   GetEngineIsolatedPositionsResponse,
   GetEngineNlpLockedBalancesResponse,
+  GetEngineNlpPoolInfoResponse,
   GetEngineSubaccountSummaryResponse,
 } from '../types';
 import { mapEngineServerProductType } from './productEngineTypeMappers';
@@ -297,8 +299,8 @@ export function mapEngineServerNlpLockedBalances(
 ): GetEngineNlpLockedBalancesResponse {
   const lockedBalances: EngineNlpLockedBalance[] =
     baseResponse.locked_balances.map((lockedBalance) => ({
-      productId: lockedBalance.product_id,
-      balance: toBigDecimal(lockedBalance.balance.amount),
+      productId: lockedBalance.balance.product_id,
+      balance: toBigDecimal(lockedBalance.balance.balance.amount),
       unlockedAt: lockedBalance.unlocked_at,
     }));
 
@@ -312,5 +314,22 @@ export function mapEngineServerNlpLockedBalances(
       productId: baseResponse.balance_unlocked.product_id,
       balance: toBigDecimal(baseResponse.balance_unlocked.balance.amount),
     },
+  };
+}
+
+export function mapEngineServerNlpPoolInfo(
+  baseResponse: EngineServerNlpPoolInfoResponse,
+): GetEngineNlpPoolInfoResponse {
+  return {
+    nlpPools: baseResponse.nlp_pools.map((pool) => ({
+      poolId: pool.pool_id,
+      subaccount: {
+        subaccountOwner: pool.owner,
+        subaccountName: pool.subaccount,
+      },
+      balanceWeight: removeDecimals(pool.balance_weight_x18),
+      subaccountInfo: mapSubaccountSummary(pool.subaccount_info),
+      openOrders: pool.open_orders.map(mapEngineServerOrder),
+    })),
   };
 }

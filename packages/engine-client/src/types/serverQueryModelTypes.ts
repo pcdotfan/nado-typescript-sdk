@@ -81,3 +81,28 @@ export interface EngineServerPerpBalance {
 }
 
 export type EngineServerProductType = 'perp' | 'spot';
+
+export interface EngineServerOrder {
+  product_id: number;
+  sender: string;
+  price_x18: string;
+  amount: string;
+  expiration: string;
+  nonce: string;
+  unfilled_amount: string;
+  digest: string;
+  placed_at: number;
+  order_type: string;
+  appendix: string;
+}
+
+export interface EngineServerNlpBalance {
+  product_id: number;
+  balance: {
+    amount: string;
+  };
+}
+export interface EngineServerNlpLockedBalance {
+  unlocked_at: number;
+  balance: EngineServerNlpBalance;
+}

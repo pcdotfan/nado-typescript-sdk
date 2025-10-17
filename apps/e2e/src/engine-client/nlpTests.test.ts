@@ -62,21 +62,25 @@ async function nlpTests(context: RunContext) {
   });
   debugPrint('Max burn NLP amount', maxBurnNlpAmount);
 
-  const burnNlpResult = await client.burnNlp({
-    subaccountOwner: walletClientAddress,
-    subaccountName: 'default',
-    nlpAmount: nlpBalanceAmount,
-    verifyingAddr: endpointAddr,
-    chainId,
-  });
-  debugPrint('Done burning NLP', burnNlpResult);
+  if (maxBurnNlpAmount.gt(0)) {
+    const burnNlpResult = await client.burnNlp({
+      subaccountOwner: walletClientAddress,
+      subaccountName: 'default',
+      nlpAmount: maxBurnNlpAmount,
+      verifyingAddr: endpointAddr,
+      chainId,
+    });
+    debugPrint('Done burning NLP', burnNlpResult);
+  }
 
   const nlpLockedBalances = await client.getNlpLockedBalances({
     subaccountOwner: walletClientAddress,
     subaccountName: 'default',
   });
-
   debugPrint('NLP Locked Balances', nlpLockedBalances);
+
+  const nlpPoolInfo = await client.getNlpPoolInfo();
+  debugPrint('NLP Pool Info', nlpPoolInfo);
 }
 
 void test('[engine-client]: Running NLP tests', () => runWithContext(nlpTests));

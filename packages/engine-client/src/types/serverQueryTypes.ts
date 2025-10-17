@@ -1,6 +1,9 @@
 import { HealthStatus } from '@nadohq/shared';
 import {
   EngineServerHealthBreakdown,
+  EngineServerNlpBalance,
+  EngineServerNlpLockedBalance,
+  EngineServerOrder,
   EngineServerPerpBalance,
   EngineServerPerpProduct,
   EngineServerProductType,
@@ -129,6 +132,7 @@ export interface EngineServerQueryRequestByType {
   max_nlp_mintable: EngineServerMaxMintNlpQueryParams;
   max_order_size: EngineServerMaxOrderSizeQueryParams;
   nlp_locked_balances: EngineServerNlpLockedBalancesQueryParams;
+  nlp_pool_info: Record<string, never>;
   max_withdrawable: EngineServerMaxWithdrawableQueryParams;
   nonces: EngineServerNoncesParams;
   order: EngineServerGetOrderQueryParams;
@@ -282,20 +286,6 @@ export interface EngineServerMarketPricesResponse {
   market_prices: EngineServerMarketPrice[];
 }
 
-export interface EngineServerOrder {
-  product_id: number;
-  sender: string;
-  price_x18: string;
-  amount: string;
-  expiration: string;
-  nonce: string;
-  unfilled_amount: string;
-  digest: string;
-  placed_at: number;
-  order_type: string;
-  appendix: string;
-}
-
 export type EngineServerOrderResponse = EngineServerOrder;
 
 export interface EngineServerValidateOrderResponse {
@@ -340,21 +330,23 @@ export interface EngineServerMaxMintNlpResponse {
   max_quote_amount: string;
 }
 
-export interface EngineServerNlpBalance {
-  product_id: number;
-  balance: {
-    amount: string;
-  };
-}
-
-export interface EngineServerNlpLockedBalance extends EngineServerNlpBalance {
-  unlocked_at: number;
-}
-
 export interface EngineServerNlpLockedBalancesResponse {
   balance_locked: EngineServerNlpBalance;
   balance_unlocked: EngineServerNlpBalance;
   locked_balances: EngineServerNlpLockedBalance[];
+}
+
+export interface EngineServerNlpPool {
+  pool_id: number;
+  subaccount: string;
+  owner: string;
+  balance_weight_x18: string;
+  subaccount_info: EngineServerSubaccountInfoResponse;
+  open_orders: EngineServerOrder[];
+}
+
+export interface EngineServerNlpPoolInfoResponse {
+  nlp_pools: EngineServerNlpPool[];
 }
 
 export interface EngineServerQueryResponseByType {
@@ -373,6 +365,7 @@ export interface EngineServerQueryResponseByType {
   max_nlp_mintable: EngineServerMaxMintNlpResponse;
   max_order_size: EngineServerMaxOrderSizeResponse;
   nlp_locked_balances: EngineServerNlpLockedBalancesResponse;
+  nlp_pool_info: EngineServerNlpPoolInfoResponse;
   max_withdrawable: EngineServerMaxWithdrawableResponse;
   nonces: EngineServerNoncesResponse;
   order: EngineServerOrderResponse;

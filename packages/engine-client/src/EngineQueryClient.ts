@@ -40,6 +40,7 @@ import {
   GetEngineMaxWithdrawableResponse,
   GetEngineNlpLockedBalancesParams,
   GetEngineNlpLockedBalancesResponse,
+  GetEngineNlpPoolInfoResponse,
   GetEngineOrderParams,
   GetEngineOrderResponse,
   GetEngineSubaccountFeeRatesParams,
@@ -61,6 +62,7 @@ import {
   mapEngineMarketPrice,
   mapEngineServerIsolatedPositions,
   mapEngineServerNlpLockedBalances,
+  mapEngineServerNlpPoolInfo,
   mapEngineServerOrder,
   mapEngineServerPerpProduct,
   mapEngineServerSpotProduct,
@@ -569,5 +571,13 @@ export class EngineQueryClient extends EngineBaseClient {
     });
 
     return mapEngineServerNlpLockedBalances(baseResponse);
+  }
+
+  /**
+   * Retrieves information about all NLP sub-pools
+   */
+  async getNlpPoolInfo(): Promise<GetEngineNlpPoolInfoResponse> {
+    const baseResponse = await this.query('nlp_pool_info', {});
+    return mapEngineServerNlpPoolInfo(baseResponse);
   }
 }

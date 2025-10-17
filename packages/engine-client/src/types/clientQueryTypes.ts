@@ -19,11 +19,11 @@ import {
   EngineServerTimeResponse,
 } from './serverQueryTypes';
 
-export type GetEngineSubaccountSummaryResponse = {
+export interface GetEngineSubaccountSummaryResponse {
   exists: boolean;
   balances: BalanceWithProduct[];
   health: HealthStatusByType;
-};
+}
 
 export type GetEngineSubaccountSummaryParams = Subaccount;
 
@@ -276,4 +276,16 @@ export interface GetEngineNlpLockedBalancesResponse {
   lockedBalances: EngineNlpLockedBalance[];
   balanceLocked: EngineNlpBalance;
   balanceUnlocked: EngineNlpBalance;
+}
+
+export interface NlpPool {
+  poolId: number;
+  subaccount: Subaccount;
+  balanceWeight: BigDecimal;
+  subaccountInfo: GetEngineSubaccountSummaryResponse;
+  openOrders: EngineOrder[];
+}
+
+export interface GetEngineNlpPoolInfoResponse {
+  nlpPools: NlpPool[];
 }
