@@ -84,7 +84,14 @@ export type EngineMintNlpParams = WithBaseEngineExecuteParams<
 export type EngineBurnNlpParams =
   WithBaseEngineExecuteParams<EIP712BurnNlpParams>;
 
-export type EnginePlaceOrdersParams = EnginePlaceOrderParams[];
+export type EnginePlaceOrdersParams = {
+  orders: EnginePlaceOrderParams[];
+  /**
+   * If `true`, aborts the batch after the first failed order; if `false`, remaining orders continue to execute.
+   * If not provided, the default value is `false`.
+   */
+  cancelOnFailure?: boolean;
+};
 
 export interface EngineExecuteRequestParamsByType {
   burn_nlp: EngineBurnNlpParams;
