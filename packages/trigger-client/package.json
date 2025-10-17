@@ -1,6 +1,6 @@
 {
   "name": "@nadohq/trigger-client",
-  "version": "0.1.0-alpha.20",
+  "version": "0.1.0-alpha.21",
   "type": "module",
   "sideEffects": false,
   "description": "> TODO: description",
@@ -37,8 +37,8 @@
     }
   },
   "dependencies": {
-    "@nadohq/engine-client": "^0.1.0-alpha.20",
-    "@nadohq/shared": "^0.1.0-alpha.20",
+    "@nadohq/engine-client": "^0.1.0-alpha.21",
+    "@nadohq/shared": "^0.1.0-alpha.21",
     "axios": "*",
     "ts-mixer": "*"
   },
