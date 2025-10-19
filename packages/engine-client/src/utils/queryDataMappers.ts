@@ -323,10 +323,8 @@ export function mapEngineServerNlpPoolInfo(
   return {
     nlpPools: baseResponse.nlp_pools.map((pool) => ({
       poolId: pool.pool_id,
-      subaccount: {
-        subaccountOwner: pool.owner,
-        subaccountName: pool.subaccount,
-      },
+      subaccountHex: pool.subaccount,
+      ownerAddress: pool.owner,
       balanceWeight: removeDecimals(pool.balance_weight_x18),
       subaccountInfo: mapSubaccountSummary(pool.subaccount_info),
       openOrders: pool.open_orders.map(mapEngineServerOrder),

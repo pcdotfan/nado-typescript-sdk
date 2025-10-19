@@ -280,7 +280,8 @@ export interface GetEngineNlpLockedBalancesResponse {
 
 export interface NlpPool {
   poolId: number;
-  subaccount: Subaccount;
+  subaccountHex: string;
+  ownerAddress: string;
   balanceWeight: BigDecimal;
   subaccountInfo: GetEngineSubaccountSummaryResponse;
   openOrders: EngineOrder[];
