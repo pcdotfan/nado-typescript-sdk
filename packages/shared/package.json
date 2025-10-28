@@ -1,6 +1,6 @@
 {
   "name": "@nadohq/shared",
-  "version": "0.1.0-alpha.27",
+  "version": "0.1.0-alpha.28",
   "type": "module",
   "sideEffects": false,
   "description": "Shared utilities, types, and contract helpers for Nado SDK",
@@ -45,5 +45,5 @@
     "bignumber.js": "^9.3.0",
     "viem": "*"
   },
-  "gitHead": "494d15823821c58c8bd629e5945a4aa7a85a29f0"
+  "gitHead": "707ac8f35888464c32371456f034a4df29aefd48"
 }
