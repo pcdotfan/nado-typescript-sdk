@@ -1,6 +1,6 @@
 {
   "name": "@nadohq/trigger-client",
-  "version": "0.1.0-alpha.28",
+  "version": "0.1.0-alpha.29",
   "type": "module",
   "sideEffects": false,
   "description": "> TODO: description",
@@ -37,8 +37,8 @@
     }
   },
   "dependencies": {
-    "@nadohq/engine-client": "^0.1.0-alpha.28",
-    "@nadohq/shared": "^0.1.0-alpha.28",
+    "@nadohq/engine-client": "^0.1.0-alpha.29",
+    "@nadohq/shared": "^0.1.0-alpha.29",
     "axios": "*",
     "ts-mixer": "*"
   },
@@ -48,5 +48,5 @@
   "devDependencies": {
     "viem": "*"
   },
-  "gitHead": "707ac8f35888464c32371456f034a4df29aefd48"
+  "gitHead": "3198acbe62af9d188d19e6dc880cdadc3ceb7585"
 }
