@@ -1,6 +1,6 @@
 {
   "name": "@nadohq/indexer-client",
-  "version": "0.1.0-alpha.30",
+  "version": "0.1.0-alpha.31",
   "type": "module",
   "sideEffects": false,
   "description": "> TODO: description",
@@ -37,8 +37,8 @@
     }
   },
   "dependencies": {
-    "@nadohq/engine-client": "^0.1.0-alpha.30",
-    "@nadohq/shared": "^0.1.0-alpha.30",
+    "@nadohq/engine-client": "^0.1.0-alpha.31",
+    "@nadohq/shared": "^0.1.0-alpha.31",
     "axios": "*",
     "ts-mixer": "*"
   },
