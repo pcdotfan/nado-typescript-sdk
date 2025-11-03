@@ -1,6 +1,6 @@
 {
   "name": "@nadohq/engine-client",
-  "version": "0.1.0-alpha.32",
+  "version": "0.1.0-alpha.33",
   "type": "module",
   "sideEffects": false,
   "description": "> TODO: description",
@@ -41,7 +41,7 @@
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "dependencies": {
-    "@nadohq/shared": "^0.1.0-alpha.32",
+    "@nadohq/shared": "^0.1.0-alpha.33",
     "axios": "*",
     "ts-mixer": "*"
   },
