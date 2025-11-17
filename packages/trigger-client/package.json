@@ -1,6 +1,6 @@
 {
   "name": "@nadohq/trigger-client",
-  "version": "0.1.0-alpha.35",
+  "version": "0.1.0-alpha.36",
   "type": "module",
   "sideEffects": false,
   "description": "> TODO: description",
@@ -41,8 +41,8 @@
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "dependencies": {
-    "@nadohq/engine-client": "^0.1.0-alpha.35",
-    "@nadohq/shared": "^0.1.0-alpha.35",
+    "@nadohq/engine-client": "^0.1.0-alpha.36",
+    "@nadohq/shared": "^0.1.0-alpha.36",
     "axios": "*",
     "ts-mixer": "*"
   },
