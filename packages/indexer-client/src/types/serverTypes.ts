@@ -252,6 +252,9 @@ export interface IndexerServerListSubaccountsResponse {
     id: string;
     // Hex of subaccount bytes
     subaccount: string;
+    // UNIX timestamp in seconds
+    created_at: string;
+    isolated: boolean;
   }[];
 }
 

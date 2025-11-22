@@ -88,6 +88,9 @@ export type ListIndexerSubaccountsParams = IndexerServerListSubaccountsParams;
 
 export type ListIndexerSubaccountsResponse = ({
   hexId: string;
+  // Unix timestamp in seconds
+  createdAt: number;
+  isolated: boolean;
 } & Subaccount)[];
 
 /**
