@@ -21,7 +21,8 @@ repo for the changes to be picked up.</p>
 <p><strong>depcruise:all</strong>: Run dependency-cruiser on all packages to check for dependency issues (incl. circular dependencies).</p>
 <h3 id="production-build-setup" class="tsd-anchor-link">Production Build Setup<a href="#production-build-setup" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><p>We're using <a href="https://tsup.egoist.dev/">Tsup</a> for building the packages in CJS and ESM formats.
 Each package has its own <code>tsup.config.ts</code> file importing <code>tsup.base.config.ts</code> at the root of the monorepo.
-<code>apps/node-compat-test</code> tests the compatibility of the SDK in a pure, bundler-less, Node.js environment.</p>
+<code>apps/node-compat-test</code> tests the compatibility of the SDK in a pure, bundler-less, Node.js environment.
+Note our packages should have legacy 'main', 'module', and 'types', 'react-native' fields in their <code>package.json</code> to ensure support of older pre-<code>exports</code> environments.</p>
 <h2 id="agent-instructions" class="tsd-anchor-link">Agent Instructions<a href="#agent-instructions" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>This repository includes agent instruction files for LLM-based development tools:</p>
 <ul>
 <li><code>AGENT.md</code> - Master instructions file</li>
