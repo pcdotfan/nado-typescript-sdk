@@ -133,6 +133,7 @@ export interface IndexerServerMatchEvent {
   net_entry_cumulative: string;
   pre_balance: IndexerServerMatchEventBalances;
   post_balance: IndexerServerMatchEventBalances;
+  is_taker: boolean;
 }
 
 export interface IndexerServerMatchEventBalances {

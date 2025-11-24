@@ -412,6 +412,7 @@ export interface IndexerMatchEvent extends Subaccount {
   cumulativeFee: BigDecimal;
   submissionIndex: string;
   timestamp: BigDecimal;
+  isTaker: boolean;
   // Tracked vars for the balance BEFORE this match event occurred
   preEventTrackedVars: Pick<
     IndexerBalanceTrackedVars,

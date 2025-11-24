@@ -521,6 +521,7 @@ export class IndexerBaseClient {
         preBalances: mapIndexerMatchEventBalances(matchEvent.pre_balance),
         postBalances,
         tx,
+        isTaker: matchEvent.is_taker,
         ...subaccountFromHex(matchEvent.order.sender),
       };
     });
