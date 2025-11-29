@@ -25,6 +25,7 @@ import {
   EngineServerPriceTickLiquidity,
   EngineServerSpotProduct,
   EngineServerSubaccountInfoResponse,
+  EngineServerSubaccountInfoState,
   EngineServerSymbol,
   EngineServerSymbolsResponse,
   EngineSymbol,
@@ -33,6 +34,7 @@ import {
   GetEngineNlpLockedBalancesResponse,
   GetEngineNlpPoolInfoResponse,
   GetEngineSubaccountSummaryResponse,
+  SubaccountSummaryState,
 } from '../types';
 import { mapEngineServerProductType } from './productEngineTypeMappers';
 
@@ -150,10 +152,32 @@ export function mapEngineServerBalanceHealthContributions(
 export function mapSubaccountSummary(
   baseResponse: EngineServerSubaccountInfoResponse,
 ): GetEngineSubaccountSummaryResponse {
-  const balances: GetEngineSubaccountSummaryResponse['balances'] = [];
+  return {
+    exists: baseResponse.exists,
+    ...mapSubaccountSummaryState(
+      baseResponse,
+      baseResponse.spot_products,
+      baseResponse.perp_products,
+    ),
+    preState: baseResponse.pre_state
+      ? mapSubaccountSummaryState(
+          baseResponse.pre_state,
+          baseResponse.spot_products,
+          baseResponse.perp_products,
+        )
+      : undefined,
+  };
+}
 
-  baseResponse.spot_balances.forEach((spotBalance) => {
-    const product = baseResponse.spot_products.find(
+function mapSubaccountSummaryState(
+  state: EngineServerSubaccountInfoState,
+  spotProducts: EngineServerSubaccountInfoResponse['spot_products'],
+  perpProducts: EngineServerSubaccountInfoResponse['perp_products'],
+): SubaccountSummaryState {
+  const balances: SubaccountSummaryState['balances'] = [];
+
+  state.spot_balances.forEach((spotBalance) => {
+    const product = spotProducts.find(
       (product) => product.product_id === spotBalance.product_id,
     );
     if (!product) {
@@ -163,14 +187,14 @@ export function mapSubaccountSummary(
     balances.push({
       amount: toBigDecimal(spotBalance.balance.amount),
       healthContributions: mapEngineServerBalanceHealthContributions(
-        baseResponse.health_contributions[spotBalance.product_id],
+        state.health_contributions[spotBalance.product_id],
       ),
       ...mapEngineServerSpotProduct(product).product,
     });
   });
 
-  baseResponse.perp_balances.forEach((perpBalance) => {
-    const product = baseResponse.perp_products.find(
+  state.perp_balances.forEach((perpBalance) => {
+    const product = perpProducts.find(
       (product) => product.product_id === perpBalance.product_id,
     );
     if (!product) {
@@ -181,30 +205,29 @@ export function mapSubaccountSummary(
       amount: toBigDecimal(perpBalance.balance.amount),
       vQuoteBalance: toBigDecimal(perpBalance.balance.v_quote_balance),
       healthContributions: mapEngineServerBalanceHealthContributions(
-        baseResponse.health_contributions[perpBalance.product_id],
+        state.health_contributions[perpBalance.product_id],
       ),
       ...mapEngineServerPerpProduct(product).product,
     });
   });
 
   return {
-    balances: balances,
-    exists: baseResponse.exists,
+    balances,
     health: {
       initial: {
-        health: toBigDecimal(baseResponse.healths[0].health),
-        assets: toBigDecimal(baseResponse.healths[0].assets),
-        liabilities: toBigDecimal(baseResponse.healths[0].liabilities),
+        health: toBigDecimal(state.healths[0].health),
+        assets: toBigDecimal(state.healths[0].assets),
+        liabilities: toBigDecimal(state.healths[0].liabilities),
       },
       maintenance: {
-        health: toBigDecimal(baseResponse.healths[1].health),
-        assets: toBigDecimal(baseResponse.healths[1].assets),
-        liabilities: toBigDecimal(baseResponse.healths[1].liabilities),
+        health: toBigDecimal(state.healths[1].health),
+        assets: toBigDecimal(state.healths[1].assets),
+        liabilities: toBigDecimal(state.healths[1].liabilities),
       },
       unweighted: {
-        health: toBigDecimal(baseResponse.healths[2].health),
-        assets: toBigDecimal(baseResponse.healths[2].assets),
-        liabilities: toBigDecimal(baseResponse.healths[2].liabilities),
+        health: toBigDecimal(state.healths[2].health),
+        assets: toBigDecimal(state.healths[2].assets),
+        liabilities: toBigDecimal(state.healths[2].liabilities),
       },
     },
   };
