@@ -51,7 +51,7 @@
   },
   "resolutions": {
     "@jest/globals": "^30.0.3",
-    "viem": "2.39.0",
+    "viem": "2.41.2",
     "axios": "^1.10.0",
     "ts-mixer": "^6.0.4"
   },

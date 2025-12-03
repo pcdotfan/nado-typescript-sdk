@@ -8253,10 +8253,10 @@ validate-npm-package-name@6.0.2, validate-npm-package-name@^6.0.0, validate-npm-
   resolved "https://registry.yarnpkg.com/validate-npm-package-name/-/validate-npm-package-name-6.0.2.tgz#4e8d2c4d939975a73dd1b7a65e8f08d44c85df96"
   integrity sha512-IUoow1YUtvoBBC06dXs8bR8B9vuA3aJfmQNKMoaPG/OFsPmoQvw8xh+6Ye25Gx9DQhoEom3Pcu9MKHerm/NpUQ==
 
-viem@*, viem@2.39.0:
-  version "2.39.0"
-  resolved "https://registry.yarnpkg.com/viem/-/viem-2.39.0.tgz#54942ca3810bc904e3bfe97837a4d160699ad902"
-  integrity sha512-rCN+IfnMESlrg/iPyyVL+M9NS/BHzyyNy72470tFmbTuscY3iPaZGMtJDcHKKV8TC6HV9DjWk0zWX6cpu0juyA==
+viem@*, viem@2.41.2:
+  version "2.41.2"
+  resolved "https://registry.yarnpkg.com/viem/-/viem-2.41.2.tgz#117eab182b6b5501e47462269bb63f8b365a802e"
+  integrity sha512-LYliajglBe1FU6+EH9mSWozp+gRA/QcHfxeD9Odf83AdH5fwUS7DroH4gHvlv6Sshqi1uXrYFA2B/EOczxd15g==
   dependencies:
     "@noble/curves" "1.9.1"
     "@noble/hashes" "1.8.0"
