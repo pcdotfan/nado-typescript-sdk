@@ -207,6 +207,10 @@ export interface IndexerServerDDAQueryParams {
   subaccount: string;
 }
 
+export interface IndexerServerPrivateAlphaChoiceParams {
+  address: string;
+}
+
 // Request
 export interface IndexerServerQueryRequestByType {
   account_snapshots: IndexerServerMultiSubaccountSnapshotsParams;
@@ -238,6 +242,7 @@ export interface IndexerServerQueryRequestByType {
   subaccounts: IndexerServerListSubaccountsParams;
   quote_price: Record<string, never>;
   nlp_snapshots: IndexerServerNlpSnapshotsParams;
+  private_alpha_choice: IndexerServerPrivateAlphaChoiceParams;
 }
 
 export type IndexerServerQueryRequestType =
@@ -412,6 +417,12 @@ export interface IndexerServerBacklogResponse {
   txs_per_second: string | null;
 }
 
+export interface IndexerServerPrivateAlphaChoiceResponse {
+  points: string;
+  fee_refund: string;
+  nft_eligibility: boolean;
+}
+
 // Response
 export interface IndexerServerQueryResponseByType {
   account_snapshots: IndexerServerMultiSubaccountSnapshotsResponse;
@@ -443,6 +454,7 @@ export interface IndexerServerQueryResponseByType {
   subaccounts: IndexerServerListSubaccountsResponse;
   quote_price: IndexerServerQuotePriceResponse;
   nlp_snapshots: IndexerServerNlpSnapshotsResponse;
+  private_alpha_choice: IndexerServerPrivateAlphaChoiceResponse;
 }
 
 /**

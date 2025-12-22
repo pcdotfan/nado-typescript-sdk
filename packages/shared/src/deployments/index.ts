@@ -3,8 +3,8 @@ import { NadoContractName } from '../abis/nadoAbis';
 
 import { ChainEnv } from '../types';
 import { getValidatedAddress } from '../utils/getValidatedAddress';
-import InkSepoliaCoreDeployment from './core/deployment.inkSepolia.json' with { type: 'json' };
 import InkMainnetCoreDeployment from './core/deployment.inkMainnet.json' with { type: 'json' };
+import InkSepoliaCoreDeployment from './core/deployment.inkSepolia.json' with { type: 'json' };
 import LocalCoreDeployment from './core/deployment.localhost.json' with { type: 'json' };
 
 export type NadoDeploymentAddresses = {

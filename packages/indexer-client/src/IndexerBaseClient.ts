@@ -88,6 +88,8 @@ import {
   GetIndexerOrdersResponse,
   GetIndexerPerpPricesParams,
   GetIndexerPerpPricesResponse,
+  GetIndexerPrivateAlphaChoiceParams,
+  GetIndexerPrivateAlphaChoiceResponse,
   GetIndexerProductSnapshotsParams,
   GetIndexerProductSnapshotsResponse,
   GetIndexerQuotePriceResponse,
@@ -828,6 +830,24 @@ export class IndexerBaseClient {
       txsPerSecond: baseResponse.txs_per_second
         ? toBigDecimal(baseResponse.txs_per_second)
         : null,
+    };
+  }
+
+  /**
+   * Retrieves private alpha choice information for a given address
+   * @param params
+   */
+  async getPrivateAlphaChoice(
+    params: GetIndexerPrivateAlphaChoiceParams,
+  ): Promise<GetIndexerPrivateAlphaChoiceResponse> {
+    const baseResponse = await this.query('private_alpha_choice', {
+      address: params.address,
+    });
+
+    return {
+      points: toBigDecimal(baseResponse.points),
+      feeRefund: toBigDecimal(baseResponse.fee_refund),
+      nftEligibility: baseResponse.nft_eligibility,
     };
   }
 

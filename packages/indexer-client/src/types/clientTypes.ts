@@ -691,6 +691,20 @@ export interface GetIndexerSubaccountDDAResponse {
 }
 
 /**
+ * Private Alpha Choice
+ */
+
+export interface GetIndexerPrivateAlphaChoiceParams {
+  address: Address;
+}
+
+export interface GetIndexerPrivateAlphaChoiceResponse {
+  points: BigDecimal;
+  feeRefund: BigDecimal;
+  nftEligibility: boolean;
+}
+
+/**
  * V2 Tickers
  */
 

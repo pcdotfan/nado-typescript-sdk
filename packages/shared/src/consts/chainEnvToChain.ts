@@ -1,5 +1,5 @@
 import { Chain } from 'viem';
-import { inkSepolia, ink, localhost } from 'viem/chains';
+import { ink, inkSepolia, localhost } from 'viem/chains';
 import { ChainEnv } from '../types';
 
 export const CHAIN_ENV_TO_CHAIN = {
