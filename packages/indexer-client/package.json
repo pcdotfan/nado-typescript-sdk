@@ -1,6 +1,6 @@
 {
   "name": "@nadohq/indexer-client",
-  "version": "0.1.0-alpha.42",
+  "version": "0.1.0-alpha.43",
   "type": "module",
   "sideEffects": false,
   "description": "> TODO: description",
@@ -41,8 +41,8 @@
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "dependencies": {
-    "@nadohq/engine-client": "^0.1.0-alpha.42",
-    "@nadohq/shared": "^0.1.0-alpha.42",
+    "@nadohq/engine-client": "^0.1.0-alpha.43",
+    "@nadohq/shared": "^0.1.0-alpha.43",
     "axios": "*",
     "ts-mixer": "*"
   },
@@ -52,5 +52,5 @@
   "devDependencies": {
     "viem": "*"
   },
-  "gitHead": "3198acbe62af9d188d19e6dc880cdadc3ceb7585"
+  "gitHead": "6ff36070568c331e8ea400afd4b8a4696e6c495f"
 }
