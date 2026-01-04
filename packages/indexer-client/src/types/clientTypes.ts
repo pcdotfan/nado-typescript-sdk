@@ -371,6 +371,9 @@ export interface IndexerOrder {
   quoteFilled: BigDecimal;
   // Includes sequencer fee
   totalFee: BigDecimal;
+  realizedPnl: BigDecimal;
+  // Always positive
+  closedSize: BigDecimal;
 }
 
 export type GetIndexerOrdersResponse = IndexerOrder[];
@@ -421,6 +424,9 @@ export interface IndexerMatchEvent extends Subaccount {
   preBalances: IndexerMatchEventBalances;
   postBalances: IndexerMatchEventBalances;
   tx: NadoTx;
+  realizedPnl: BigDecimal;
+  // Always positive
+  closedSize: BigDecimal;
 }
 
 export type GetIndexerMatchEventsResponse = IndexerMatchEvent[];

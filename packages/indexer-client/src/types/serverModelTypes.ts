@@ -109,6 +109,8 @@ export interface IndexerServerOrder {
   quote_filled: string;
   // Includes sequencer fee
   fee: string;
+  realized_pnl: string;
+  closed_amount: string;
 }
 
 /**
@@ -134,6 +136,8 @@ export interface IndexerServerMatchEvent {
   pre_balance: IndexerServerMatchEventBalances;
   post_balance: IndexerServerMatchEventBalances;
   is_taker: boolean;
+  realized_pnl: string;
+  closed_amount: string;
 }
 
 export interface IndexerServerMatchEventBalances {

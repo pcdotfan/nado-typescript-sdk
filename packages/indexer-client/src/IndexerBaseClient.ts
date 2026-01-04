@@ -524,6 +524,8 @@ export class IndexerBaseClient {
         postBalances,
         tx,
         isTaker: matchEvent.is_taker,
+        realizedPnl: toBigDecimal(matchEvent.realized_pnl),
+        closedSize: toBigDecimal(matchEvent.closed_amount),
         ...subaccountFromHex(matchEvent.order.sender),
       };
     });
